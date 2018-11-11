@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-	private static int basePrice;					// 기본 가격
-	private static final Inventory INVENTORY = Inventory.getInstance();		// 창고
+	private static int basePrice;					// 湲곕낯 媛�寃�
+	private static final Inventory INVENTORY = Inventory.getInstance();		// 李쎄퀬
 
-	private String name;							// 메뉴명
-	private List<Ingredient> baseIngredients;		// 베이스 재료
-	private List<Ingredient> extraIngredients;		// 추가 재료
-	private int price;								// 메뉴 가격
-
+	private String name;							// 硫붾돱紐�
+	private List<Ingredient> baseIngredients;		// 踰좎씠�뒪 �옱猷�
+	private List<Ingredient> extraIngredients;		// 異붽� �옱猷�
+	private int price;								// 硫붾돱 媛�寃�
+	private static int sizePrice = 1500;
+	
 	public Menu(String name) {
 		this.name = name;
 		this.baseIngredients = new ArrayList<>();
@@ -19,7 +20,7 @@ public class Menu {
 		this.price = Menu.basePrice;
 	}
 
-	// 재료명으로 재료 탐색
+	// �옱猷뚮챸�쑝濡� �옱猷� �깘�깋
 	private Ingredient findBaseIngredient(String name) {
 		return findIngredient(baseIngredients, name);
 	}
@@ -39,10 +40,10 @@ public class Menu {
 		return null;
 	}
 
-	// 재료 추가 / 제거
+	// �옱猷� 異붽� / �젣嫄�
 	public void addBaseIngredient(String name) {
-		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 창고 재료
-		if(invIngredient == null) return;	// 창고에 없는 재료
+		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 李쎄퀬 �옱猷�
+		if(invIngredient == null) return;	// 李쎄퀬�뿉 �뾾�뒗 �옱猷�
 
 		if(findBaseIngredient(name) == null) {
 			baseIngredients.add(new Ingredient(invIngredient, 1));
@@ -58,8 +59,8 @@ public class Menu {
 	}
 
 	public void addExtraIngredient(String name, int defaultNumber) {
-		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 창고 재료
-		if(invIngredient == null) return;	// 창고에 없는 재료
+		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 李쎄퀬 �옱猷�
+		if(invIngredient == null) return;	// 李쎄퀬�뿉 �뾾�뒗 �옱猷�
 
 		if(findExtraIngredient(name) == null) {
 			extraIngredients.add(new Ingredient(invIngredient, defaultNumber));
@@ -107,7 +108,7 @@ public class Menu {
 		return this.extraIngredients;
 	}
 
-	public void setCalcPrice() {		// 원재료 값을 기반으로 가격 자동 계산
+	public void setCalcPrice() {		// �썝�옱猷� 媛믪쓣 湲곕컲�쑝濡� 媛�寃� �옄�룞 怨꾩궛
 		this.price = basePrice;
 
 		for(Ingredient ingredient : this.baseIngredients) {
@@ -117,5 +118,10 @@ public class Menu {
 		for(Ingredient ingredient : this.extraIngredients) {
 			this.price += ingredient.getCost() * ingredient.getAmount();
 		}
+	}
+	
+	public static int getSizePrice()
+	{
+		return (sizePrice);
 	}
 }
