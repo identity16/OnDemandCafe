@@ -7,6 +7,7 @@ public class Ingredient {
 
 	private StringProperty name;
 	private IntegerProperty cost;
+	private IntegerProperty stockAmount;
 	
 	public void setName(String name)
 	{
@@ -18,13 +19,23 @@ public class Ingredient {
 		this.cost.set(cost);
 	}
 	
+	public void setNumber(int stockAmount)
+	{
+		this.stockAmount.set(stockAmount);
+	}
+	
 	public String getName()
 	{
-		return name.get();
+		return (name.get());
 	}
 	
 	public int getCost()
 	{
-		return cost.get();
+		return (cost.get());
+	}
+	
+	public int getstockAmount()
+	{
+		return (stockAmount.get());
 	}
 }
