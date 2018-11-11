@@ -12,6 +12,7 @@ public class Menu {
 	private List<Ingredient> extraIngredients;		// 추가 재료
 	private int price;								// 메뉴 가격
 	private boolean isCustom;						// 커스텀 메뉴 플래그
+	private static int sizePrice = 1500;
 
 	public Menu(String name) {
 		this(name, true);
@@ -135,5 +136,10 @@ public class Menu {
 		for(Ingredient ingredient : this.extraIngredients) {
 			this.price += ingredient.getCost() * ingredient.getAmount();
 		}
+	}
+
+	public static int getSizePrice()
+	{
+		return (sizePrice);
 	}
 }
