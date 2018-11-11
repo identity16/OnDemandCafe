@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Menu {
 	private static int basePrice;					// 기본 가격
+	private static final Inventory INVENTORY = Inventory.getInstance();		// 창고
 
 	private String name;							// 메뉴명
 	private List<Ingredient> baseIngredients;		// 베이스 재료
@@ -18,21 +19,59 @@ public class Menu {
 		this.price = Menu.basePrice;
 	}
 
+	// 재료명으로 재료 탐색
+	private Ingredient findBaseIngredient(String name) {
+		return findIngredient(baseIngredients, name);
+	}
+
+	private Ingredient findExtraIngredient(String name) {
+		return findIngredient(extraIngredients, name);
+	}
+
+	private Ingredient findIngredient(List<Ingredient> list, String name) {
+		if(name == null) return null;
+
+		for (Ingredient ingredient : list) {
+			if (name.equals(ingredient.getName()))
+				return ingredient;
+		}
+
+		return null;
+	}
+
 	// 재료 추가 / 제거
-	public void addBaseIngredient(Ingredient ingredient) {
-		baseIngredients.add(ingredient);
+	public void addBaseIngredient(String name) {
+		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 창고 재료
+		if(invIngredient == null) return;	// 창고에 없는 재료
+
+		if(findBaseIngredient(name) == null) {
+			baseIngredients.add(new Ingredient(invIngredient, 1));
+		}
 	}
 
-	public void removeBaseIngredient(Ingredient ingredient) {
-		baseIngredients.remove(ingredient);
+	public void removeBaseIngredient(String name) {
+		Ingredient ingredient = findBaseIngredient(name);
+
+		if(ingredient != null) {
+			baseIngredients.remove(ingredient);
+		}
 	}
 
-	public void addExtraIngredient(Ingredient ingredient) {
-		extraIngredients.add(ingredient);
+	public void addExtraIngredient(String name, int defaultNumber) {
+		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 창고 재료
+		if(invIngredient == null) return;	// 창고에 없는 재료
+
+		if(findExtraIngredient(name) == null) {
+			extraIngredients.add(new Ingredient(invIngredient, defaultNumber));
+		}
 	}
 
-	public void removeExtraIngredient(Ingredient ingredient) {
-		extraIngredients.remove(ingredient);
+	public void removeExtraIngredient(String name) {
+		Ingredient ingredient = findExtraIngredient(name);
+
+		if(ingredient != null) {
+			extraIngredients.remove(ingredient);
+		}
 	}
 
 	// Getter / Setter
@@ -58,5 +97,25 @@ public class Menu {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public List<Ingredient> getBaseIngredients() {
+		return this.baseIngredients;
+	}
+
+	public List<Ingredient> getExtraIngredients() {
+		return this.extraIngredients;
+	}
+
+	public void setCalcPrice() {		// 원재료 값을 기반으로 가격 자동 계산
+		this.price = basePrice;
+
+		for(Ingredient ingredient : this.baseIngredients) {
+			this.price += ingredient.getCost() * ingredient.getAmount();
+		}
+
+		for(Ingredient ingredient : this.extraIngredients) {
+			this.price += ingredient.getCost() * ingredient.getAmount();
+		}
 	}
 }
