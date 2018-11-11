@@ -1,18 +1,18 @@
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 
 public class Main extends Application implements EventHandler<KeyEvent>{
 
-	private Stage		primaryStage;
-	private AnchorPane	TitleView;
-	private AnchorPane	MenuList;
+	private Stage	primaryStage;
+	private Pane 	titleRoot;
+	private Pane	menuRoot;
 	private static Scene scene;
 
 	@Override
@@ -28,7 +28,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 	{
 		if (event.getCode() == KeyCode.SPACE)
 		{
-			initMenuList();
+			initMenuView();
 		}
 	}
 
@@ -36,10 +36,10 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/TitleView.fxml"));
-			TitleView = loader.load();
+			loader.setLocation(Main.class.getResource("view/title.fxml"));
+			titleRoot = loader.load();
 
-			scene = new Scene(TitleView);
+			scene = new Scene(titleRoot);
 			scene.setOnKeyPressed(this);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -48,14 +48,14 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		}
 	}
 
-	public void initMenuList()
+	public void initMenuView()
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/MenuList.fxml"));
-			MenuList = loader.load();
+			loader.setLocation(getClass().getResource("view/menu.fxml"));
+			menuRoot = loader.load();
 
-			scene.setRoot(MenuList);
+			scene.setRoot(menuRoot);
 
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -66,7 +66,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 
 	public Stage getPrimaryStage()
 	{
-		return (primaryStage);
+		return primaryStage;
 	}
 
 	// Run Program

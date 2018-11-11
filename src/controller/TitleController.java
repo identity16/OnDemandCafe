@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 
-public class TitleViewController implements Initializable {
+public class TitleController implements Initializable {
 	
 	@FXML private Label pressSpaceLabel;
 	
