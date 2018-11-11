@@ -60,9 +60,11 @@ public class MenuBoard {
 	}
 
 	private void insertTestData() {
-		Menu m1 = new Menu("에스프레소");
-		Menu m2 = new Menu("아메리카노");
-		Menu m3 = new Menu("비엔나");
+		Menu m1 = new Menu("에스프레소", false);
+		Menu m2 = new Menu("아메리카노", false);
+		Menu m3 = new Menu("비엔나", false);
+		Menu m4 = new Menu("에스프레소 콘파냐", false);
+		Menu m5 = new Menu("비둘기야~ 비둘기!비둘기!비둘기!비둘기!");
 
 		m1.addBaseIngredient("샷");
 
@@ -77,8 +79,17 @@ public class MenuBoard {
 		m3.addBaseIngredient("휘핑크림");
 		m3.addExtraIngredient("샷");
 
+		m4.addBaseIngredient("샷");
+		m4.addBaseIngredient("휘핑크림");
+
+		m5.addBaseIngredient("샷");
+		m5.addBaseIngredient("물");
+		m5.addBaseIngredient("데운우유");
+
 		addMenu(m1);
 		addMenu(m2);
 		addMenu(m3);
+		addMenu(m4);
+		addMenu(m5);
 	}
 }
