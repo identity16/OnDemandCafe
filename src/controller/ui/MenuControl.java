@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class MenuControl extends StackPane {
 	@FXML private Label name;
+	@FXML private StackPane customLabel;
 	private Menu menu;
 
 	public MenuControl(Menu menu) {
@@ -22,7 +23,10 @@ public class MenuControl extends StackPane {
 		try {
 			fxmlLoader.load();
 
+			// Control 요소 세팅
 			name.setText(menu.getName());
+			customLabel.setVisible(menu.isCustom());	// On Demand 라벨 표시 여부
+
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}

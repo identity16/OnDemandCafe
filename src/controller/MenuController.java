@@ -34,7 +34,8 @@ public class MenuController implements Initializable {
 		List<Menu> menuList = MenuBoard.getInstance().getMenuList();
 
 		for(Menu menu : menuList) {
-			menuPane.getChildren().add(new MenuControl(menu));
+			MenuControl control = new MenuControl(menu);
+			menuPane.getChildren().add(control);
 		}
 	}
 }

@@ -126,20 +126,26 @@ public class Menu {
 		return this.extraIngredients;
 	}
 
-	public void setCalcPrice() {		// 원재료 값을 기반으로 가격 자동 계산
-		this.price = basePrice;
+	public int getCalcPrice() {						// 원재료 값을 기반으로 가격 자동 계산
+		int price = basePrice;
 
 		for(Ingredient ingredient : this.baseIngredients) {
-			this.price += ingredient.getCost() * ingredient.getAmount();
+			price += ingredient.getCost() * ingredient.getAmount();
 		}
 
 		for(Ingredient ingredient : this.extraIngredients) {
-			this.price += ingredient.getCost() * ingredient.getAmount();
+			price += ingredient.getCost() * ingredient.getAmount();
 		}
+
+		return price;
 	}
 
 	public static int getSizePrice()
 	{
-		return (sizePrice);
+		return sizePrice;
+	}
+
+	public boolean isCustom() {
+		return isCustom;
 	}
 }
