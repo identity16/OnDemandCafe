@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-	private static int basePrice;					// 기본 가격
+	private static int basePrice = 1000;					// 기본 가격
 	private static final Inventory INVENTORY = Inventory.getInstance();		// 창고
 
 	private String name;							// 메뉴명

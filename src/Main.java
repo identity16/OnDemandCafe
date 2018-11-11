@@ -42,6 +42,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			scene = new Scene(titleRoot);
 			scene.setOnKeyPressed(this);
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
