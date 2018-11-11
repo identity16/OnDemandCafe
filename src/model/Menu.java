@@ -11,12 +11,18 @@ public class Menu {
 	private List<Ingredient> baseIngredients;		// 베이스 재료
 	private List<Ingredient> extraIngredients;		// 추가 재료
 	private int price;								// 메뉴 가격
+	private boolean isCustom;						// 커스텀 메뉴 플래그
 
 	public Menu(String name) {
+		this(name, true);
+	}
+
+	public Menu(String name, boolean isCustom) {
 		this.name = name;
 		this.baseIngredients = new ArrayList<>();
 		this.extraIngredients = new ArrayList<>();
 		this.price = Menu.basePrice;
+		this.isCustom = isCustom;
 	}
 
 	// 재료명으로 재료 탐색

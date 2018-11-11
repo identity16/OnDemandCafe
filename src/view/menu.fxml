@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MenuController">
+<VBox prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MenuController" style="-fx-background-color: white;">
    <children>
       <Label alignment="CENTER" prefHeight="95.0" prefWidth="151.0" text="MENU" textAlignment="CENTER">
          <font>
@@ -25,7 +25,7 @@
          <children>
             <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="529.0" prefWidth="815.0">
                <content>
-                  <TilePane fx:id="menuPane" tileAlignment="TOP_LEFT" />
+                  <TilePane fx:id="menuPane" tileAlignment="TOP_LEFT" style="-fx-background-color: white;"/>
                </content>
             </ScrollPane>
             <VBox alignment="TOP_CENTER" prefHeight="411.0" prefWidth="265.0">

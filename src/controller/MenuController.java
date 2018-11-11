@@ -9,8 +9,11 @@ import controller.ui.MenuControl;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.TilePane;
+import model.Menu;
+import model.MenuBoard;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
@@ -28,8 +31,10 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		scrollPane.setStyle("-fx-background-color:transparent;");	// ScrollPane border 투명화
 
-		for(int i=0; i<29; i++)
-			menuPane.getChildren().add(new MenuControl());
+		List<Menu> menuList = MenuBoard.getInstance().getMenuList();
 
+		for(Menu menu : menuList) {
+			menuPane.getChildren().add(new MenuControl(menu));
+		}
 	}
 }
