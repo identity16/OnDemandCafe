@@ -45,7 +45,13 @@ public class Menu {
 		if(invIngredient == null) return;	// 창고에 없는 재료
 
 		if(findBaseIngredient(name) == null) {
-			baseIngredients.add(new Ingredient(invIngredient, 1));
+			Ingredient extra = findExtraIngredient(name);
+
+			if(extra != null) {
+				baseIngredients.add(extra);
+			} else {
+				baseIngredients.add(new Ingredient(invIngredient, 1));
+			}
 		}
 	}
 
@@ -57,12 +63,18 @@ public class Menu {
 		}
 	}
 
-	public void addExtraIngredient(String name, int defaultNumber) {
+	public void addExtraIngredient(String name) {
 		Ingredient invIngredient = INVENTORY.getIngredient(name);		// 창고 재료
 		if(invIngredient == null) return;	// 창고에 없는 재료
 
 		if(findExtraIngredient(name) == null) {
-			extraIngredients.add(new Ingredient(invIngredient, defaultNumber));
+			Ingredient base = findBaseIngredient(name);
+
+			if(base != null) {
+				extraIngredients.add(base);
+			} else {
+				extraIngredients.add(new Ingredient(invIngredient, 0));
+			}
 		}
 	}
 
