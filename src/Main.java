@@ -1,7 +1,4 @@
 import java.io.IOException;
-
-
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -17,12 +14,12 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 	private AnchorPane	TitleView;
 	private AnchorPane	MenuList;
 	private static Scene scene;
-	
+
 	@Override
 	public void	start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("On Demand Cafe");
-		
+
 		initTitleView();
 	}
 
@@ -34,14 +31,14 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			initMenuList();
 		}
 	}
-	
+
 	public void initTitleView()
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/TitleView.fxml"));
-			TitleView = (AnchorPane) loader.load();
-			
+			TitleView = loader.load();
+
 			scene = new Scene(TitleView);
 			scene.setOnKeyPressed(this);
 			primaryStage.setScene(scene);
@@ -50,28 +47,29 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initMenuList()
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/MenuList.fxml"));
-			MenuList = (AnchorPane) loader.load();
-			
+			MenuList = loader.load();
+
 			scene.setRoot(MenuList);
-			
+
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Stage getPrimaryStage()
 	{
 		return (primaryStage);
 	}
-	
+
+	// Run Program
 	public static void main(String[] args) {
 		launch(args);
 	}
