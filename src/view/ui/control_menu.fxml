@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<fx:root alignment="CENTER" prefHeight="157.0" prefWidth="157.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml">
+   <children>
+
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#cccccc" height="126.0" width="126.0" />
+   </children>
+   <padding>
+      <Insets bottom="15.5" right="15.5" left="15.5" top="15.5"/>
+   </padding>
+</fx:root>
