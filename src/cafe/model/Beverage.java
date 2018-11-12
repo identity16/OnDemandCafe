@@ -1,5 +1,8 @@
 package cafe.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ public class Beverage {
 	private boolean isExtra;
 	private boolean isHot;
 	private int price;
+	private IntegerProperty amount;
 	
 	public Beverage(Menu menu) {
 		this.name = menu.getName();
@@ -17,6 +21,7 @@ public class Beverage {
 		this.isHot = false;
 		this.price = menu.getPrice();
 		this.ingredients = new ArrayList<>();
+		this.amount = new SimpleIntegerProperty(1);
 
 		ingredients.addAll(menu.getBaseIngredients());
 		
@@ -28,6 +33,7 @@ public class Beverage {
 		}
 	}
 
+	// Getter / Setter
 	public boolean isExtra() {
 		return isExtra;
 	}
@@ -97,5 +103,17 @@ public class Beverage {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getAmount() {
+		return amount.get();
+	}
+
+	public IntegerProperty amountProperty() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount.set(amount);
 	}
 }
