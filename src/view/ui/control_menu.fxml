@@ -8,12 +8,14 @@
 
 <fx:root prefHeight="157.0" prefWidth="157.0" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml">
    <children>
-      <Rectangle fx:id="rectangle" arcHeight="50.0" arcWidth="50.0" fill="#E0E0E0" height="126.0" width="126.0"/>
-      <Label fx:id="name" alignment="CENTER" prefHeight="127.0" prefWidth="127.0" text="Label" textAlignment="CENTER" wrapText="true" StackPane.alignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <Rectangle fx:id="rectangle" arcHeight="50.0" arcWidth="50.0" fill="#E0E0E0" height="126.0" width="126.0" />
+      <Label fx:id="name" alignment="CENTER" prefHeight="126.0" prefWidth="126.0" style="-fx-font-family: sans-serif; -fx-font-size: 14pt; -fx-font-weight: bold;" text="Label" textAlignment="CENTER" wrapText="true" StackPane.alignment="CENTER">
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+         <padding>
+            <Insets bottom="9.0" top="9.0" />
+         </padding></Label>
       <StackPane fx:id="customLabel" prefHeight="22.0" prefWidth="88.0" StackPane.alignment="TOP_CENTER">
          <children>
             <Rectangle arcHeight="22.0" arcWidth="22.0" fill="#1abc9c" height="22.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="88.0" StackPane.alignment="TOP_CENTER">
