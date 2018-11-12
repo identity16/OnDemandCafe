@@ -8,7 +8,7 @@
 
 <fx:root prefHeight="157.0" prefWidth="157.0" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml">
    <children>
-      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#cccccc" height="126.0" width="126.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#cccccc" height="126.0" width="126.0" fx:id="menuRectangle"/>
       <Label fx:id="name" alignment="CENTER" prefHeight="127.0" prefWidth="127.0" text="Label" textAlignment="CENTER" wrapText="true" StackPane.alignment="CENTER">
          <font>
             <Font size="18.0" />

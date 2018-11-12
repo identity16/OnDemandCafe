@@ -1,4 +1,4 @@
-package model;
+package cafe.model;
 
 import javafx.beans.property.StringProperty;
 
