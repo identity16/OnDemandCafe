@@ -1,16 +1,8 @@
 package cafe;
-import java.io.IOException;
-import java.util.Stack;
 
-import cafe.SceneChange.Location;
+import cafe.SceneChanger.Location;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class Main extends Application {
 
@@ -27,7 +19,7 @@ public class Main extends Application {
 		this.primaryStage.setTitle("On Demand Cafe");
 		primaryStage.setResizable(false);
 
-		SceneChange.getInstance().nextSceneChange(Location.TITLE);
+		SceneChanger.getInstance().next(Location.TITLE);
 	}
 
 	public Stage getPrimaryStage()

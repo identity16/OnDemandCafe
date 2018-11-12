@@ -6,9 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import cafe.Main;
-import cafe.SceneChange;
-import cafe.SceneChange.Location;
+import cafe.SceneChanger;
+import cafe.SceneChanger.Location;
 import cafe.model.Menu;
 
 import java.io.IOException;
@@ -49,7 +48,7 @@ public class MenuControl extends StackPane {
 				name.setText(menu.getName());
 			});
 			rectangle.setOnMouseClicked(event -> {
-				SceneChange.getInstance().nextSceneChange(Location.BASE);
+				SceneChanger.getInstance().next(Location.BASE);
 			});
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
