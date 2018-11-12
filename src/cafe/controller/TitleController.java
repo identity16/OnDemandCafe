@@ -1,4 +1,4 @@
-package controller;
+package cafe.controller;
 
 import javafx.scene.control.Label;
 import javafx.util.Duration;
