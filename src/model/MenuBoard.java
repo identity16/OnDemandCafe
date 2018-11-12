@@ -64,12 +64,19 @@ public class MenuBoard {
 		return menuList;
 	}
 
+	// 테스트 함수
 	private void insertTestData() {
 		Menu m1 = new Menu("에스프레소", false);
 		Menu m2 = new Menu("아메리카노", false);
 		Menu m3 = new Menu("비엔나", false);
 		Menu m4 = new Menu("에스프레소 콘파냐", false);
-		Menu m5 = new Menu("비둘기야~ 비둘기!비둘기!비둘기!비둘기!");
+		Menu m5 = new Menu("비둘기야~ 비둘기! 비둘기! 비둘기! 비둘기! 비둘기! 비둘기! 비둘기! 비둘기!");
+		Menu m6 = new Menu("커스텀 메뉴1");
+		Menu m7 = new Menu("커스텀 메뉴2");
+		Menu m8 = new Menu("커스텀 메뉴3");
+		Menu m9 = new Menu("기본 메뉴1", false);
+		Menu m10 = new Menu("기본 메뉴2", false);
+		Menu m11 = new Menu("기본 메뉴3", false);
 
 		m1.addBaseIngredient("샷");
 
@@ -91,10 +98,33 @@ public class MenuBoard {
 		m5.addBaseIngredient("물");
 		m5.addBaseIngredient("데운우유");
 
+		m6.addBaseIngredient("샷");
+		m6.addBaseIngredient("데운우유");
+
+		m7.addBaseIngredient("휘핑크림");
+		m7.addExtraIngredient("휘핑크림");
+
+		m8.addBaseIngredient("물");
+
+		m9.addBaseIngredient("데운우유");
+
+		m10.addBaseIngredient("물");
+		m10.addBaseIngredient("데운우유");
+
+		m11.addBaseIngredient("휘핑크림");
+		m11.addBaseIngredient("물");
+
+
 		addMenu(m1, 1300);
 		addMenu(m2);
 		addMenu(m3);
 		addMenu(m4);
 		addMenu(m5);
+		addMenu(m6);
+		addMenu(m7);
+		addMenu(m8, 9000);
+		addMenu(m9);
+		addMenu(m10);
+		addMenu(m11);
 	}
 }

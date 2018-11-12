@@ -1,10 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import javafx.beans.property.StringProperty;
 
 public class Beverage {
 	
@@ -14,70 +11,91 @@ public class Beverage {
 	private boolean isHot;
 	private int price;
 	
-	public Beverage(Menu menu)
-	{
+	public Beverage(Menu menu) {
 		this.name = menu.getName();
 		this.isExtra = false;
 		this.isHot = false;
 		this.price = menu.getPrice();
 		this.ingredients = new ArrayList<>();
-		
-		for(Ingredient ingredient : menu.getBaseIngredients())
-			ingredients.add(ingredient);
+
+		ingredients.addAll(menu.getBaseIngredients());
 		
 		for(Ingredient ingredient : menu.getExtraIngredients())
 		{
-			if(!ingredients.contains(ingredient))
+			if(!ingredients.contains(ingredient)) {
 				ingredients.add(ingredient);
+			}
 		}
 	}
-	
-	public void setIsExtra(boolean isExtra)
-	{
+
+	public boolean isExtra() {
+		return isExtra;
+	}
+
+	public void setExtra(boolean isExtra) {
 		this.isExtra = isExtra;
 	}
-	
-	public boolean getIsExtra()
-	{
-		return (isExtra);
+
+	public boolean isHot() {
+		return isHot;
 	}
-	
-	public void setisHot(boolean isHot)
-	{
+
+	public void setHot(boolean isHot) {
 		this.isHot = isHot;
 	}
-	
-	public void setIngredientAmount(String ingridentName, int amount)
-	{
-		findIngredient(ingridentName).setAmount(amount);
-	}
-	
+
 	public int getIngredientAmount(String ingredientName)
 	{
-		return (findIngredient(ingredientName).getAmount());
+		Ingredient ingredient = findIngredient(ingredientName);
+
+		if(ingredient != null) {
+			return ingredient.getAmount();
+		}
+
+		return -1;
 	}
-	
-	private Ingredient findIngredient(String name) 
+
+	public void setIngredientAmount(String ingredientName, int amount)
 	{
-		if(name == null) return null;
+		if(amount < 0) return;
+
+		Ingredient ingredient = findIngredient(ingredientName);
+
+		if(ingredient != null) {
+			ingredient.setAmount(amount);
+		}
+	}
+
+	private Ingredient findIngredient(String ingredientName) {
+		if(ingredientName == null) return null;
 
 		for (Ingredient ingredient : ingredients) {
-			if (name.equals(ingredient.getName()))
+			if (ingredientName.equals(ingredient.getName())) {
 				return ingredient;
+			}
 		}
 		return null;
 	}
-	
-	public int getPrice()
-	{
-		return (price);
+
+	// 사이즈 고려 X
+	public int getOriginalPrice() {
+		return price;
 	}
-	
-	public void updatePricebyS(Menu menu)
-	{
-		if (this.getIsExtra())
-			price = price + Menu.getSizePrice();
-		else
-			price = price - Menu.getSizePrice();
+
+	// 사이즈 고려
+	public int getPrice() {
+		return this.isExtra ? price + Menu.getSizePrice() : price;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
