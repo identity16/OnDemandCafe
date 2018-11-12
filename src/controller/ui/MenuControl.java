@@ -1,10 +1,8 @@
 package controller.ui;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -52,14 +50,6 @@ public class MenuControl extends StackPane {
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	@FXML public void handleMouseEntered(MouseEvent e) {
-
-	}
-
-	@FXML public void handleMouseExited(MouseEvent e) {
-
 	}
 
 	// Menu Getter
