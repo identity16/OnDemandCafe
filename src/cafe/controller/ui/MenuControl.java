@@ -1,13 +1,12 @@
-package controller.ui;
+package cafe.controller.ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.Menu;
+import cafe.model.Menu;
 
 import java.io.IOException;
 
@@ -21,7 +20,7 @@ public class MenuControl extends StackPane {
 	public MenuControl(Menu menu) {
 		this.menu = menu;
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ui/control_menu.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cafe/view/ui/control_menu.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
