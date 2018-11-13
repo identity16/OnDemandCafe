@@ -77,8 +77,10 @@ public class BaseIngredientController implements Initializable {
 		menuNameProperty.addListener((observable, oldValue, newValue) -> {			// 메뉴 이름 변경 이벤트
 			if(!isMenuExist) {
 				menuNameField.setDisable(false);
+				nextBtn.setDisable(true);
 			} else {
 				menuNameField.setDisable(true);
+				nextBtn.setDisable(false);
 			}
 		});
 
