@@ -5,6 +5,7 @@ import cafe.model.Ingredient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
 import java.io.IOException;
@@ -48,10 +49,10 @@ public class IngredientControl extends ListCell<Ingredient> {
 				deleteBtn.setVisible(false);
 
 				nameLabel.setOnMouseClicked(event -> {
-					Popup addingredient = new Popup();
+					Popup addBaseDialog = new Popup();
 					try {
-						addingredient.getContent().add(FXMLLoader.load(getClass().getResource("/cafe/view/base_choice.fxml")));
-						addingredient.show(Main.instance.getPrimaryStage());
+						addBaseDialog.getContent().add(FXMLLoader.load(getClass().getResource("/cafe/view/add_base_dialog.fxml")));
+						addBaseDialog.show(Main.instance.getPrimaryStage());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

@@ -13,53 +13,33 @@ import javafx.scene.shape.Circle;
 
 public class BaseChoiceControl extends VBox{
 	
-	@FXML private Label		nameLabel;
-	@FXML private Label		costLabel;
-	@FXML private Circle	choiceCircle;
-	@FXML private HBox		amountContainer;
+	@FXML public Label		nameLabel;
+	@FXML public Label		costLabel;
+	@FXML public Circle	choiceCircle;
+	@FXML public HBox		amountContainer;
 	
 	private int			clickedCount = 0;
 	private Ingredient	ingredient;
 	
-	public BaseChoiceControl(Ingredient ingredient) {
-		this.ingredient = ingredient;
-		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cafe/view/ui/control_basechoice.fxml"));
+	public BaseChoiceControl() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cafe/view/ui/control_base_choice.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		
 		try {
 			fxmlLoader.load();
-			
-			nameLabel.setText(ingredient.getName());
-			costLabel.setText(String.valueOf(ingredient.getCost()));
-			
-			amountContainer.setVisible(false);
-			
-			nameLabel.setMouseTransparent(true);
-			costLabel.setMouseTransparent(true);
-			
-			choiceCircle.setOnMouseEntered(event -> {
-				if (clickedCount % 2 == 0)
-					choiceCircle.setFill(Color.rgb(243, 156, 18));
-				else
-					choiceCircle.setFill(Color.rgb(221, 221, 221));
-			});
-			choiceCircle.setOnMouseExited(event -> {
-				if (clickedCount % 2 == 0)
-					choiceCircle.setFill(Color.rgb(221, 221, 221));
-				else
-					choiceCircle.setFill(Color.rgb(243, 156, 18));
-			});
-			choiceCircle.setOnMouseClicked(event -> {
-				if (clickedCount % 2 == 0)
-					choiceCircle.setFill(Color.rgb(243, 156, 18));
-				else
-					choiceCircle.setFill(Color.rgb(221, 221, 221));
-				clickedCount++;
-			});
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getClickedCount() {
+		return clickedCount;
+	}
+
+	public void setClickedCount(int clickedCount) {
+		this.clickedCount = clickedCount;
 	}
 }

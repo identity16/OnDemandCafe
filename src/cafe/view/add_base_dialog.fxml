@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.BaseChoiceController">
+<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.AddBaseDialogController">
    <children>
       <ScrollPane prefHeight="250.0" prefWidth="1090.0" vbarPolicy="NEVER">
          <content>
