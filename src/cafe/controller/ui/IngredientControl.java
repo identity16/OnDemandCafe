@@ -1,9 +1,11 @@
 package cafe.controller.ui;
 
+import cafe.Main;
 import cafe.model.Ingredient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.stage.Popup;
 
 import java.io.IOException;
 
@@ -46,8 +48,13 @@ public class IngredientControl extends ListCell<Ingredient> {
 				deleteBtn.setVisible(false);
 
 				nameLabel.setOnMouseClicked(event -> {
-					// TODO: 재료 추가 다이얼로그
-					System.out.println("재료 추가!!");
+					Popup addBaseDialog = new Popup();
+					try {
+						addBaseDialog.getContent().add(FXMLLoader.load(getClass().getResource("/cafe/view/add_base_dialog.fxml")));
+						addBaseDialog.show(Main.instance.getPrimaryStage());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				});
 			} else {
 				nameLabel.setText(item.getName());

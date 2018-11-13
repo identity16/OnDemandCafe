@@ -16,16 +16,19 @@ public class Beverage {
 	private IntegerProperty amount;
 	
 	public Beverage(Menu menu) {
-		this.name = menu.getName();
+		Menu m = new Menu(menu);
+		m.setPrice(menu.getPrice());
+
+		this.name = m.getName();
 		this.isExtra = false;
 		this.isHot = false;
-		this.price = menu.getPrice();
+		this.price = m.getPrice();
 		this.ingredients = new ArrayList<>();
 		this.amount = new SimpleIntegerProperty(1);
 
-		ingredients.addAll(menu.getBaseIngredients());
+		ingredients.addAll(m.getBaseIngredients());
 		
-		for(Ingredient ingredient : menu.getExtraIngredients())
+		for(Ingredient ingredient : m.getExtraIngredients())
 		{
 			if(!ingredients.contains(ingredient)) {
 				ingredients.add(ingredient);
@@ -115,5 +118,9 @@ public class Beverage {
 
 	public void setAmount(int amount) {
 		this.amount.set(amount);
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }

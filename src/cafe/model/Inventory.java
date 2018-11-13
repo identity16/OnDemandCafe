@@ -12,6 +12,7 @@ public class Inventory {
 		ingredientList = new ArrayList<>();
 
 		// File Input => Add Loaded Ingredients
+		// TODO: 파일 입력으로 재료 목록 받아오기
 
 		/*Test Data*/
 		insertTestData();
@@ -41,8 +42,16 @@ public class Inventory {
 
 	// 재료 추가
 	public void addIngredient(String name, int cost, int initStockAmount) {
+		addIngredient(name, cost, initStockAmount, false);
+	}
+
+	public void addIngredient(String name, int cost, int initStockAmount, boolean isCoffee) {
 		if(getIngredient(name) == null) {
-			ingredientList.add(new Ingredient(name, cost, initStockAmount));
+			if(isCoffee) {
+				ingredientList.add(new CoffeeBean(name, cost, initStockAmount));
+			} else {
+				ingredientList.add(new Ingredient(name, cost, initStockAmount));
+			}
 		}
 	}
 
@@ -60,7 +69,7 @@ public class Inventory {
 	}
 
 	private void insertTestData() {
-		addIngredient("샷", 500, 500);
+		addIngredient("샷", 500, 500, true);
 		addIngredient("물", 0, 1000);
 		addIngredient("휘핑크림", 500, 100);
 		addIngredient("초코시럽", 700, 100);

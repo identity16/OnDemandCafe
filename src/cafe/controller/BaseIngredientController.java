@@ -1,6 +1,7 @@
 package cafe.controller;
 
 import cafe.SceneChanger;
+import cafe.SceneChanger.Location;
 import cafe.controller.ui.IngredientControlFactory;
 import cafe.model.Ingredient;
 import cafe.model.Menu;
@@ -31,13 +32,13 @@ public class BaseIngredientController implements Initializable {
 	@FXML Button prevBtn;
 	@FXML Label priceLabel;
 
-	private ObservableList<Ingredient> ingredientList;
+	private ObservableList<Ingredient> baseIngredientList;
 	private StringProperty menuNameProperty;
 	private Boolean isMenuExist = true;
 
 	public BaseIngredientController() {
-		ingredientList = FXCollections.observableArrayList();
-		ingredientList.add(0, new Ingredient());	// 추가 버튼 위치
+		baseIngredientList = FXCollections.observableArrayList();
+		baseIngredientList.add(0, new Ingredient());	// 추가 버튼 위치
 
 		menuNameProperty = new SimpleStringProperty(null);
 	}
@@ -50,14 +51,17 @@ public class BaseIngredientController implements Initializable {
 		// 값 초기화
 		Platform.runLater(() -> {
 			Menu initMenu = (Menu) root.getUserData();
-			menuNameProperty.setValue(initMenu.getName());
-			ingredientList.addAll(initMenu.getBaseIngredients());
+
+			if(!initMenu.isDummy()) {
+				menuNameProperty.setValue(initMenu.getName());
+				baseIngredientList.addAll(initMenu.getBaseIngredients());
+			}
 		});
 
 		// Event Handling
-		ingredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
+		baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
 			// 첫 번째 Null(추가 버튼) 뺀 subList
-			List<Ingredient> withoutNull = ingredientList.subList(1, ingredientList.size());
+			List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
 
 			Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
 			isMenuExist = existingMenu != null;
@@ -74,8 +78,10 @@ public class BaseIngredientController implements Initializable {
 		menuNameProperty.addListener((observable, oldValue, newValue) -> {			// 메뉴 이름 변경 이벤트
 			if(!isMenuExist) {
 				menuNameField.setDisable(false);
+				nextBtn.setDisable(true);
 			} else {
 				menuNameField.setDisable(true);
+				nextBtn.setDisable(false);
 			}
 		});
 
@@ -104,18 +110,25 @@ public class BaseIngredientController implements Initializable {
 			if(existingMenu == null) {	// 새로운 메뉴이면
 				result = new Menu(name);
 
-				result.getBaseIngredients().addAll(ingredientList.subList(1, ingredientList.size()));
-				// 새로운 메뉴는 샷 추가만 가능
-				result.addExtraIngredient("샷");
+				result.getBaseIngredients().addAll(baseIngredientList.subList(1, baseIngredientList.size()));
+
+				if(result.findBaseIngredient("샷") != null) {		// 샷이 있는 메뉴일 때
+					// 새로운 메뉴는 샷 추가만 가능
+					result.addExtraIngredient("샷");
+				}
+
+				MenuBoard.getInstance().addMenu(result);
+
 				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);
+				result.setPrice(existingMenu.getPrice());
 			}
 
-			// TODO: 다음 화면으로 전환
+			SceneChanger.getInstance().next(Location.EXTRA, result);
 		});
 
-		ingredientListView.setItems(ingredientList);
+		ingredientListView.setItems(baseIngredientList);
 		ingredientListView.setPlaceholder(new Label("재료가 없습니다."));
 		ingredientListView.setCellFactory(new IngredientControlFactory());
 	}
