@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "cafe.controller.AdminMenuController" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.AdminMenuController">
    <children>
       <SplitPane dividerPositions="0.45" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -15,34 +23,16 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" layoutX="9.0" layoutY="82.0" prefHeight="337.0" prefWidth="500.0">
                      <content>
-                        <TilePane prefHeight="463.0" prefWidth="502.0">
-                           <children>
-                              <Button fx:id = "btnPlus" mnemonicParsing="false" prefHeight="107.0" prefWidth="103.0" text="+">
-                                 <TilePane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </TilePane.margin>
-                                 <font>
-                                    <Font name="SansSerif Regular" size="46.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </TilePane>
+                        <TilePane fx:id="menuPane" prefColumns="3" prefHeight="335.0" prefWidth="498.0" />
                      </content></ScrollPane>
-                  <Label layoutX="64.0" layoutY="27.0" text="Basic Menu">
+                  <TextField fx:id="editBasicPrice" cacheShape="false" layoutX="216.0" layoutY="442.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="39.0" prefWidth="139.0">
                      <font>
-                        <Font name="SansSerif Regular" size="24.0" />
+                        <Font name="SansSerif Regular" size="17.0" />
                      </font>
-                  </Label>
-                  <Label layoutX="340.0" layoutY="27.0" text="Custom Menu">
-                     <font>
-                        <Font name="SansSerif Regular" size="24.0" />
-                     </font>
-                  </Label>
-                  <TextArea layoutX="216.0" layoutY="442.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="39.0" prefWidth="139.0">
-                     <font>
-                        <Font name="SansSerif Regular" size="20.0" />
-                     </font>
-                  </TextArea>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </TextField>
                   <Label layoutX="52.0" layoutY="445.0" text="BasicPrice : ">
                      <font>
                         <Font name="SansSerif Regular" size="27.0" />
@@ -53,12 +43,21 @@
                         <Font size="27.0" />
                      </font>
                   </Label>
-                  <Slider layoutX="223.0" layoutY="32.0" max="1.0" prefHeight="12.0" prefWidth="85.0" />
+                  <RadioButton fx:id="radioBasic" layoutX="69.0" layoutY="33.0" mnemonicParsing="false" selected="true" text="Basic Menu">
+                     <font>
+                        <Font name="SansSerif Regular" size="21.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioCustom" selected ="true" layoutX="293.0" layoutY="33.0" mnemonicParsing="false" text="Custom Menu">
+                     <font>
+                        <Font name="SansSerif Regular" size="21.0" />
+                     </font>
+                  </RadioButton>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id = "btnSave" layoutX="301.0" layoutY="419.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="91.0" text="Save">
+                  <Button fx:id="btnSave" layoutX="301.0" layoutY="419.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="91.0" text="Save">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
@@ -71,26 +70,26 @@
                         <Font name="SansSerif Regular" size="27.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="106.0" layoutY="441.0" prefHeight="39.0" prefWidth="139.0" />
+                  <TextField fx:id="editMenuPrice" layoutX="106.0" layoutY="441.0" prefHeight="39.0" prefWidth="139.0" />
                   <Label layoutX="253.0" layoutY="444.0" text="원">
                      <font>
                         <Font size="27.0" />
                      </font>
                   </Label>
-                  <CheckBox layoutX="23.0" layoutY="405.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="256.0" text="Basic Price + Ingredient Price" />
-                  <Button layoutX="515.0" layoutY="420.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="91.0" text="Delete">
+                  <CheckBox fx:id="checkBox" layoutX="23.0" layoutY="405.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="256.0" text="Basic Price + Ingredient Price" />
+                  <Button fx:id="btnDel" layoutX="515.0" layoutY="420.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="91.0" text="Delete">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Button>
-                  <Button fx:id = "btnCan" layoutX="408.0" layoutY="419.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="91.0" text="Cancel">
+                  <Button fx:id="btnCan" layoutX="408.0" layoutY="419.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="91.0" text="Cancel">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Button>
-                  <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="387.0" prefWidth="606.0">
+                  <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="387.0" prefWidth="592.0">
                      <content>
-                        <VBox prefHeight="672.0" prefWidth="585.0" />
+                        <VBox fx:id="ingrePane" prefHeight="385.0" prefWidth="590.0" />
                      </content>
                   </ScrollPane>
                </children></AnchorPane>
@@ -110,8 +109,8 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <TextField fx:id = "txt1" layoutX="638.0" layoutY="23.0" prefHeight="52.0" prefWidth="421.0" />
-      <Button fx:id = "BtnOpt" layoutX="1065.0" layoutY="22.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="85.0" text="Option" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="22.0">
+      <TextField fx:id="txtMenuName" layoutX="638.0" layoutY="23.0" prefHeight="52.0" prefWidth="421.0" />
+      <Button fx:id="btnOpt" layoutX="1065.0" layoutY="22.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="85.0" text="Option" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="22.0">
          <font>
             <Font name="SansSerif Regular" size="19.0" />
          </font>
