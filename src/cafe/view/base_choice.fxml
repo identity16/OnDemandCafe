@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.BaseChoiceController">
    <children>
       <ScrollPane prefHeight="250.0" prefWidth="1090.0" vbarPolicy="NEVER">
          <content>
-            <TilePane prefHeight="223.0" prefWidth="1088.0" />
+            <TilePane prefHeight="223.0" prefWidth="1088.0" fx:id="ingredientPane"/>
          </content>
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="44.0">
