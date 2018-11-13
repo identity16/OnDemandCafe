@@ -52,6 +52,7 @@ public class AdminMenuController implements Initializable {
         btnSave.setOnAction(event -> handleSave(event));
         radioBasic.setOnAction(event -> handleBasic(event));
         radioCustom.setOnAction(event -> handleCustom(event));
+
     }
 
     private void handleCan(ActionEvent event) {
@@ -59,7 +60,10 @@ public class AdminMenuController implements Initializable {
     }
 
     private void handleSave(ActionEvent event) {
-        System.out.println("저장");
+
+        String basicPrice = editBasicPrice.getText();
+        Menu.setBasePrice(Integer.parseInt(basicPrice));
+
     }
 
     private void handleBasic(ActionEvent event) {
