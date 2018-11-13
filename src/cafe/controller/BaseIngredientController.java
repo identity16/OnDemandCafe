@@ -1,6 +1,7 @@
 package cafe.controller;
 
 import cafe.SceneChanger;
+import cafe.SceneChanger.Location;
 import cafe.controller.ui.IngredientControlFactory;
 import cafe.model.Ingredient;
 import cafe.model.Menu;
@@ -117,7 +118,7 @@ public class BaseIngredientController implements Initializable {
 				result = new Menu(existingMenu);
 			}
 
-			// TODO: 다음 화면으로 전환
+			SceneChanger.getInstance().next(Location.EXTRA, result);
 		});
 
 		ingredientListView.setItems(baseIngredientList);
