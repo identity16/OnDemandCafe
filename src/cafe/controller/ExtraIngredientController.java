@@ -7,10 +7,7 @@ import cafe.model.Ingredient;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +31,7 @@ public class ExtraIngredientController implements Initializable {
 	private ObservableList<Ingredient> extraIngredientList;
 	private Beverage beverage;
 	private Menu initMenu;
+	private boolean hasOptions = false;
 
 	public ExtraIngredientController() {
 		extraIngredientList = FXCollections.observableArrayList();
@@ -68,12 +66,22 @@ public class ExtraIngredientController implements Initializable {
 			beverage = new Beverage(initMenu);
 			beverage.setExtra(isExtraCheck.isSelected());
 			beverage.setHot(isHot.getSelectedToggle().getUserData().equals("true"));
-			System.out.println("E: " + beverage.isExtra() + ", H: " + beverage.isHot());
 
-			SceneChanger.getInstance().back();
-			SceneChanger.getInstance().back();
-			SceneChanger.getInstance().back();
-			SceneChanger.getInstance().next(SceneChanger.Location.MENU, beverage);
+			beverage.setName(beverage.getName()
+					+ (beverage.isHot() ? "(H " : "(I ")
+					+ (beverage.isExtra() ? "E" : "") + ")"
+					+ (hasOptions ? "*" : ""));
+
+
+			if(initMenu.findBaseIngredient("샷") != null) {		// 샷이 없으면 원두 선택 없이 바로 주문 추가
+				SceneChanger.getInstance().back();
+				SceneChanger.getInstance().back();
+				SceneChanger.getInstance().back();
+				SceneChanger.getInstance().next(SceneChanger.Location.MENU, beverage);
+			} else {
+				SceneChanger.getInstance().next(SceneChanger.Location.COFFE_BEAN, beverage);
+
+			}
 		});
 	}
 
@@ -92,6 +100,7 @@ public class ExtraIngredientController implements Initializable {
 		List<Ingredient> origList = origMenu.getExtraIngredients();
 
 		int price = origMenu.getPrice();
+		hasOptions = false;
 
 		// 재료 이름으로 정렬
 		origList.sort(Comparator.comparing(Ingredient::getName));
@@ -99,6 +108,9 @@ public class ExtraIngredientController implements Initializable {
 
 		for(int i=0; i<extraIngredients.size(); i++) {
 			int amountDiff = extraIngredients.get(i).getAmount() - origList.get(i).getAmount();
+
+			if(amountDiff != 0) hasOptions = true;
+
 			price += origList.get(i).getCost() * amountDiff;
 		}
 

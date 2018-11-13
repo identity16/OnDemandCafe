@@ -19,6 +19,7 @@ public class SceneChanger {
 		MENU("/cafe/view/menu.fxml"),
 		BASE("/cafe/view/base_ingredients.fxml"),
 		EXTRA("/cafe/view/extra_ingredients.fxml"),
+		COFFE_BEAN("/cafe/view/coffee_bean.fxml"),
 		ADMIN("/cafe/view/adminTitle.fxml"),
 		ADMENU("/cafe/view/adminMenu.fxml"),
 		ADING("/cafe/view/adminIngre.fxml");

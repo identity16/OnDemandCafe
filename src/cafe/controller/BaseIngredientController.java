@@ -111,12 +111,15 @@ public class BaseIngredientController implements Initializable {
 				result = new Menu(name);
 
 				result.getBaseIngredients().addAll(baseIngredientList.subList(1, baseIngredientList.size()));
-				// 새로운 메뉴는 샷 추가만 가능
-				result.addExtraIngredient("샷");
+
+				if(result.findBaseIngredient("샷") != null) {		// 샷이 있는 메뉴일 때
+					// 새로운 메뉴는 샷 추가만 가능
+					result.addExtraIngredient("샷");
+				}
+
 				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);
-				System.out.println(MenuBoard.getInstance().getMenu("아메리카노").getCalcPrice());
 				result.setPrice(existingMenu.getPrice());
 			}
 

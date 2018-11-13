@@ -49,11 +49,11 @@ public class Menu {
 	}
 
 	// 재료명으로 재료 탐색
-	private Ingredient findBaseIngredient(String name) {
+	public Ingredient findBaseIngredient(String name) {
 		return findIngredient(baseIngredients, name);
 	}
 
-	private Ingredient findExtraIngredient(String name) {
+	public Ingredient findExtraIngredient(String name) {
 		return findIngredient(extraIngredients, name);
 	}
 
