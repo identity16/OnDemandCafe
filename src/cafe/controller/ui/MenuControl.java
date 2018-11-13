@@ -30,7 +30,8 @@ public class MenuControl extends StackPane {
 			fxmlLoader.load();
 
 			// Control 요소 세팅
-			name.setText(menu.getName());
+			name.setText(menu.isDummy() ? "+" : menu.getName());
+
 			customLabel.setVisible(menu.isCustom());	// On Demand 라벨 표시 여부
 
 			// 특정 컨트롤 Mouse Event 무효화
@@ -38,15 +39,19 @@ public class MenuControl extends StackPane {
 			name.setMouseTransparent(true);
 
 			// Mouse Event Handling
-			rectangle.setOnMouseEntered(event -> {
-				rectangle.setFill(Color.rgb(243, 156, 18));
-				name.setText(String.valueOf(menu.getPrice()));
-			});
 
-			rectangle.setOnMouseExited(event -> {
-				rectangle.setFill(Color.rgb(0xE0, 0xE0, 0xE0));
-				name.setText(menu.getName());
-			});
+			if(!menu.isDummy()) {
+				rectangle.setOnMouseEntered(event -> {
+					rectangle.setFill(Color.rgb(243, 156, 18));
+					name.setText(String.valueOf(menu.getPrice()));
+				});
+
+				rectangle.setOnMouseExited(event -> {
+					rectangle.setFill(Color.rgb(0xE0, 0xE0, 0xE0));
+					name.setText(menu.getName());
+				});
+			}
+
 			rectangle.setOnMouseClicked(event -> {
 				SceneChanger.getInstance().next(Location.BASE, menu);
 			});

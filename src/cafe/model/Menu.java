@@ -17,6 +17,13 @@ public class Menu {
 	private boolean isCustom;						// 커스텀 메뉴 플래그
 	private static int sizePrice = 1500;
 
+	public Menu() {
+		this.name = null;
+		this.baseIngredients = null;
+		this.extraIngredients = null;
+		this.price = -1;
+	}
+
 	public Menu(String name) {
 		this(name, true);
 	}
@@ -189,5 +196,10 @@ public class Menu {
 				.append(isCustom).append("\n}");
 
 		return stringBuilder.toString();
+	}
+
+	// Dummy Object인지 확인
+	public boolean isDummy() {
+		return this.name == null;
 	}
 }

@@ -9,10 +9,12 @@ public class MenuBoard {
 	// Singleton
 	private MenuBoard () {
 		menuList = new ArrayList<>();
+		menuList.add(new Menu());		// Insert Dummy Object
 
 		// File Input => Add Loaded Menu
+		// TODO: 파일 입력으로 메뉴 목록 받아오기
 
-		/*Test Data*/
+		/* Test Data */
 		insertTestData();
 	}
 
@@ -30,6 +32,8 @@ public class MenuBoard {
 		if(name == null) return null;
 
 		for(Menu menu : menuList) {
+			if(menu.isDummy()) continue;
+
 			if(name.equals(menu.getName())) {
 				return menu;
 			}
@@ -48,6 +52,8 @@ public class MenuBoard {
 		tmpBase.sort(Comparator.comparing(Ingredient::getName));
 
 		for(Menu menu : menuList) {
+			if(menu.isDummy()) continue;
+
 			List<Ingredient> menuBase = menu.getBaseIngredients();
 			if(tmpBase.size() != menuBase.size()) continue;
 

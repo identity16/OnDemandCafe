@@ -50,8 +50,11 @@ public class BaseIngredientController implements Initializable {
 		// 값 초기화
 		Platform.runLater(() -> {
 			Menu initMenu = (Menu) root.getUserData();
-			menuNameProperty.setValue(initMenu.getName());
-			ingredientList.addAll(initMenu.getBaseIngredients());
+
+			if(!initMenu.isDummy()) {
+				menuNameProperty.setValue(initMenu.getName());
+				ingredientList.addAll(initMenu.getBaseIngredients());
+			}
 		});
 
 		// Event Handling

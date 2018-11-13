@@ -12,6 +12,7 @@ public class Inventory {
 		ingredientList = new ArrayList<>();
 
 		// File Input => Add Loaded Ingredients
+		// TODO: 파일 입력으로 재료 목록 받아오기
 
 		/*Test Data*/
 		insertTestData();
