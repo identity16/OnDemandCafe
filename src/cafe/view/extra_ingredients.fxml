@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+   <children>
+      <VBox layoutY="100.0" prefHeight="500.0" prefWidth="600.0">
+         <children>
+            <HBox prefHeight="78.0" prefWidth="179.0">
+               <children>
+                  <ToggleButton mnemonicParsing="false" prefHeight="77.0" prefWidth="105.0" text="ICE (+0원)">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="IsHot" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton mnemonicParsing="false" prefHeight="77.0" prefWidth="105.0" text="HOT(+0원)" toggleGroup="$IsHot">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ToggleButton>
+               </children>
+               <VBox.margin>
+                  <Insets right="350.0" />
+               </VBox.margin>
+            </HBox>
+            <Label prefHeight="100.0" prefWidth="160.0" text="사이즈 추가">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="50.0" prefWidth="140.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Extra Size">
+                     <HBox.margin>
+                        <Insets top="-25.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <Label prefHeight="50.0" prefWidth="78.0" text="(+1500원)" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" top="-25.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets right="350.0" />
+               </VBox.margin>
+            </HBox>
+            <Label prefHeight="50.0" prefWidth="160.0" text="추가 재료">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="-25.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="206.0" prefWidth="560.0" vbarPolicy="NEVER">
+               <VBox.margin>
+                  <Insets left="-10.0" top="10.0" />
+               </VBox.margin>
+               <content>
+                  <HBox prefHeight="202.0" prefWidth="567.0" />
+               </content>
+            </ScrollPane>
+         </children>
+         <padding>
+            <Insets left="40.0" top="40.0" />
+         </padding>
+      </VBox>
+      <Label layoutX="40.0" prefHeight="100.0" prefWidth="229.0" text="주문 옵션">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
