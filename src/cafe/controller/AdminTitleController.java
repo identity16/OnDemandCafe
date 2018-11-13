@@ -35,7 +35,7 @@ public class AdminTitleController implements Initializable {
 	}
 
 	public void handleIng(ActionEvent event) {
-		System.out.println("Ingredi로 이동");
+		SceneChanger.getInstance().next(SceneChanger.Location.ADING);
 	}
 
 	public void handleBack(ActionEvent event) {

@@ -20,7 +20,7 @@ public class SceneChanger {
 		BASE("/cafe/view/base_ingredients.fxml"),
 		ADMIN("/cafe/view/adminTitle.fxml"),
 		ADMENU("/cafe/view/adminMenu.fxml"),
-		ADING("/cafe/view/adminIng.fxml");
+		ADING("/cafe/view/adminIngre.fxml");
 		
 		final private String name;
 		
