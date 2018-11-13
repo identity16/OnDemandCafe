@@ -41,14 +41,14 @@
                   <VBox.margin>
                      <Insets bottom="20.0" top="20.0" />
                   </VBox.margin></Label>
-				<Button prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgb(52, 152, 219);" text="주문 완료" textFill="WHITE">
+				<Button fx:id="btnComplete" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgb(52, 152, 219);" text="주문 완료" textFill="WHITE">
                   <font>
                      <Font name="SansSerif Bold" size="17.0" />
                   </font>
                   <VBox.margin>
                      <Insets bottom="5.0" top="5.0" />
                   </VBox.margin></Button>
-               <Button fx:id = "btnCan" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #BBBBBB;" text="주문 취소">
+               <Button fx:id="btnCancel" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #BBBBBB;" text="주문 취소">
 				   <font>
 					   <Font name="SansSerif Bold" size="17.0" />
 				   </font>

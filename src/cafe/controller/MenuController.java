@@ -5,8 +5,6 @@ import cafe.controller.ui.OrderControlFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -29,7 +27,8 @@ public class MenuController implements Initializable {
 	@FXML ScrollPane scrollPane;
 	@FXML ListView<Beverage> orderListView;
 	@FXML Label totalPriceLabel;
-	@FXML Button btnCan;
+	@FXML Button btnComplete;
+	@FXML Button btnCancel;
 
 	private ObservableList<Beverage> orderedBeverages;
 
@@ -64,12 +63,10 @@ public class MenuController implements Initializable {
 			totalPriceLabel.setText(String.valueOf(calcTotalPrice()));
 		});
 
-		btnCan.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				SceneChanger.getInstance().back();
-			}
+		btnComplete.setOnAction(event -> {
+			// TODO: 주문 완료 화면 넘기기
 		});
+		btnCancel.setOnAction(event -> SceneChanger.getInstance().back());
 	}
 
 	// 총 음료 가격 합계 계산
