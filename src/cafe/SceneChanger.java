@@ -17,7 +17,10 @@ public class SceneChanger {
 	public enum Location {
 		TITLE("/cafe/view/title.fxml"),
 		MENU("/cafe/view/menu.fxml"),
-		BASE("/cafe/view/base_ingredients.fxml");
+		BASE("/cafe/view/base_ingredients.fxml"),
+		ADMIN("/cafe/view/adminTitle.fxml"),
+		ADMENU("/cafe/view/adminMenu.fxml"),
+		ADING("/cafe/view/adminIng.fxml");
 		
 		final private String name;
 		
@@ -62,6 +65,8 @@ public class SceneChanger {
 					{
 						this.next(Location.MENU);
 					}
+					else if (event.getCode() == KeyCode.ENTER)
+						this.next(Location.ADMIN);
 				});
 			}
 
