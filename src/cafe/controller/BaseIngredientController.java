@@ -31,13 +31,13 @@ public class BaseIngredientController implements Initializable {
 	@FXML Button prevBtn;
 	@FXML Label priceLabel;
 
-	private ObservableList<Ingredient> ingredientList;
+	private ObservableList<Ingredient> baseIngredientList;
 	private StringProperty menuNameProperty;
 	private Boolean isMenuExist = true;
 
 	public BaseIngredientController() {
-		ingredientList = FXCollections.observableArrayList();
-		ingredientList.add(0, new Ingredient());	// 추가 버튼 위치
+		baseIngredientList = FXCollections.observableArrayList();
+		baseIngredientList.add(0, new Ingredient());	// 추가 버튼 위치
 
 		menuNameProperty = new SimpleStringProperty(null);
 	}
@@ -53,14 +53,14 @@ public class BaseIngredientController implements Initializable {
 
 			if(!initMenu.isDummy()) {
 				menuNameProperty.setValue(initMenu.getName());
-				ingredientList.addAll(initMenu.getBaseIngredients());
+				baseIngredientList.addAll(initMenu.getBaseIngredients());
 			}
 		});
 
 		// Event Handling
-		ingredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
+		baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
 			// 첫 번째 Null(추가 버튼) 뺀 subList
-			List<Ingredient> withoutNull = ingredientList.subList(1, ingredientList.size());
+			List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
 
 			Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
 			isMenuExist = existingMenu != null;
@@ -107,7 +107,7 @@ public class BaseIngredientController implements Initializable {
 			if(existingMenu == null) {	// 새로운 메뉴이면
 				result = new Menu(name);
 
-				result.getBaseIngredients().addAll(ingredientList.subList(1, ingredientList.size()));
+				result.getBaseIngredients().addAll(baseIngredientList.subList(1, baseIngredientList.size()));
 				// 새로운 메뉴는 샷 추가만 가능
 				result.addExtraIngredient("샷");
 				result.setPrice(result.getCalcPrice());
@@ -118,7 +118,7 @@ public class BaseIngredientController implements Initializable {
 			// TODO: 다음 화면으로 전환
 		});
 
-		ingredientListView.setItems(ingredientList);
+		ingredientListView.setItems(baseIngredientList);
 		ingredientListView.setPlaceholder(new Label("재료가 없습니다."));
 		ingredientListView.setCellFactory(new IngredientControlFactory());
 	}
