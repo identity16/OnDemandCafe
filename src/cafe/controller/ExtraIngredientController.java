@@ -84,7 +84,6 @@ public class ExtraIngredientController implements Initializable {
 		menuNameField.setDisable(true);
 
 		// Event Handling
-
 		isExtraCheck.selectedProperty().addListener(
 				(observable, oldValue, newValue) -> priceLabel.setText(calcFinalPrice(extraIngredientList) + "원"));
 
@@ -112,7 +111,7 @@ public class ExtraIngredientController implements Initializable {
 			beverage.setName(beverageName);
 
 
-			if(initMenu.findBaseIngredient("샷") != null) {		// 샷이 없으면 원두 선택 없이 바로 주문 추가
+			if(initMenu.findBaseIngredient("샷") == null) {		// 샷이 없으면 원두 선택 없이 바로 주문 추가
 				SceneChanger.getInstance().back();
 				SceneChanger.getInstance().back();
 				SceneChanger.getInstance().back();

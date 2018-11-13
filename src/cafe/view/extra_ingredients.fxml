@@ -43,11 +43,11 @@
                <Font name="SansSerif Bold" size="20.0" />
             </font>
          </CheckBox>
-         <ScrollPane hbarPolicy="NEVER" prefHeight="300.0" prefWidth="540.0" style="-fx-background-color: transparent;">
+         <ScrollPane hbarPolicy="NEVER" prefHeight="350.0" prefWidth="540.0" style="-fx-background-color: transparent;">
             <VBox.margin>
                <Insets />
             </VBox.margin>
-            <HBox fx:id="extraContainer" prefWidth="600.0" prefHeight="300.0"/>
+            <HBox fx:id="extraContainer" prefWidth="600.0" prefHeight="300.0" style="-fx-background-color: white;"/>
          </ScrollPane>
       </VBox>
       <VBox prefHeight="505.0" prefWidth="474.0">

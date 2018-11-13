@@ -117,6 +117,8 @@ public class BaseIngredientController implements Initializable {
 					result.addExtraIngredient("샷");
 				}
 
+				MenuBoard.getInstance().addMenu(result);
+
 				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);

@@ -83,7 +83,7 @@ public class MenuBoard {
 
 	public void addMenu(Menu menu, int price) {
 		if(getMenu(menu.getName()) == null) {
-			menuList.add(menu);
+			menuList.add(new Menu(menu));
 			menu.setPrice(price);
 		}
 	}
