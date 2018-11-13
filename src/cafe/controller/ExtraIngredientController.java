@@ -1,23 +1,24 @@
 package cafe.controller;
 
 import cafe.SceneChanger;
-import cafe.controller.ui.IngredientControlFactory;
+import cafe.controller.ui.BaseChoiceControl;
 import cafe.model.Beverage;
 import cafe.model.Ingredient;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import javafx.beans.value.ChangeListener;
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ExtraIngredientController implements Initializable {
 	@FXML private VBox root;
@@ -27,6 +28,7 @@ public class ExtraIngredientController implements Initializable {
 	@FXML private Button prevBtn;
 	@FXML private Button nextBtn;
 	@FXML private CheckBox isExtraCheck;
+	@FXML private HBox extraContainer;
 
 	private ObservableList<Ingredient> extraIngredientList;
 	private Beverage beverage;
@@ -47,6 +49,35 @@ public class ExtraIngredientController implements Initializable {
 				menuNameField.setText(initMenu.getName());
 				extraIngredientList.addAll(initMenu.getExtraIngredients());
 				priceLabel.setText(initMenu.getPrice() + "원");
+
+				for(Ingredient ingredient : extraIngredientList) {
+					BaseChoiceControl baseChoice = new BaseChoiceControl();
+					baseChoice.nameLabel.setText(ingredient.getName());
+					baseChoice.costLabel.setText("(+" + ingredient.getCost() + ")");
+					baseChoice.amountField.setText("" + ingredient.getAmount());
+					baseChoice.defaultAmountLabel.setText("(기본 " + ingredient.getAmount() + ")");
+
+					// Event Handling
+					baseChoice.amountField.textProperty().addListener((observable, oldValue, newValue) -> {
+						// 0 이상의 정수만 입력
+						try {
+							int inputNum = "".equals(newValue) ? 0 : Integer.parseInt(newValue);
+
+							if (inputNum < 0) {
+								baseChoice.amountField.setText(oldValue);
+							} else {
+								baseChoice.amountField.setText(String.valueOf(inputNum));
+								ingredient.setAmount(inputNum);
+							}
+						} catch (NumberFormatException e) {
+							baseChoice.amountField.setText(oldValue);
+						}
+
+						priceLabel.setText(calcFinalPrice(extraIngredientList) + "원");
+					});
+
+					extraContainer.getChildren().add(baseChoice);
+				}
 			}
 		});
 
@@ -57,20 +88,28 @@ public class ExtraIngredientController implements Initializable {
 		isExtraCheck.selectedProperty().addListener(
 				(observable, oldValue, newValue) -> priceLabel.setText(calcFinalPrice(extraIngredientList) + "원"));
 
-		// TODO: Extra Ingredient 수량 변경 시 이벤트 처리
-
-
 		prevBtn.setOnAction(event -> SceneChanger.getInstance().back());
 
 		nextBtn.setOnAction(event -> {
 			beverage = new Beverage(initMenu);
+			beverage.setPrice(calcPrice(extraIngredientList));
 			beverage.setExtra(isExtraCheck.isSelected());
 			beverage.setHot(isHot.getSelectedToggle().getUserData().equals("true"));
 
-			beverage.setName(beverage.getName()
-					+ (beverage.isHot() ? "(H " : "(I ")
-					+ (beverage.isExtra() ? "E" : "") + ")"
-					+ (hasOptions ? "*" : ""));
+
+			String beverageName = beverage.getName();
+			beverageName += "(";
+			if(beverage.isHot()) beverageName += "H";
+			else beverageName += "I";
+
+			if(beverage.isExtra()) beverageName += ", E";
+
+			beverageName += ")";
+
+			if(hasOptions) beverageName += "*";
+
+
+			beverage.setName(beverageName);
 
 
 			if(initMenu.findBaseIngredient("샷") != null) {		// 샷이 없으면 원두 선택 없이 바로 주문 추가

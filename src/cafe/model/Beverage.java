@@ -119,4 +119,8 @@ public class Beverage {
 	public void setAmount(int amount) {
 		this.amount.set(amount);
 	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
 }

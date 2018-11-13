@@ -5,7 +5,6 @@ import cafe.model.Ingredient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class IngredientControl extends ListCell<Ingredient> {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					System.out.println("재료 추가!!");
 				});
 			} else {
 				nameLabel.setText(item.getName());
