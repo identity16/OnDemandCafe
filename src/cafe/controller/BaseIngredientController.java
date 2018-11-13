@@ -5,6 +5,7 @@ import cafe.controller.ui.IngredientControlFactory;
 import cafe.model.Ingredient;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BaseIngredientController implements Initializable {
@@ -27,6 +29,7 @@ public class BaseIngredientController implements Initializable {
 	@FXML TextField menuNameField;
 	@FXML Button nextBtn;
 	@FXML Button prevBtn;
+	@FXML Label priceLabel;
 
 	private ObservableList<Ingredient> ingredientList;
 	private StringProperty menuNameProperty;
@@ -38,25 +41,26 @@ public class BaseIngredientController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		// 선택된 메뉴
-		Menu initMenu = (Menu) root.getUserData();
-
-		// 값 초기화
-		menuNameProperty.setValue(initMenu.getName());
-		ingredientList.addAll(initMenu.getBaseIngredients());
-
 		// 메뉴 이름, 텍스트필드 바인딩
 		menuNameProperty.bindBidirectional(menuNameField.textProperty());
 
+		// 값 초기화
+		Platform.runLater(() -> {
+			Menu initMenu = (Menu) root.getUserData();
+			menuNameProperty.setValue(initMenu.getName());
+			ingredientList.addAll(initMenu.getBaseIngredients());
+		});
+
 		// Event Handling
 		ingredientList.addListener((ListChangeListener<Ingredient>) c -> {
-			Menu temp = MenuBoard.getInstance().getMenu(ingredientList);
+			Menu existingMenu = MenuBoard.getInstance().getMenu(ingredientList);
 
-			if(temp == null) {
+			if(existingMenu == null) {
 				menuNameProperty.setValue("");
+				priceLabel.setText(calcBasePrice(ingredientList) + "원");
 			} else {
-				menuNameProperty.setValue(temp.getName());
+				menuNameProperty.setValue(existingMenu.getName());
+				priceLabel.setText(existingMenu.getPrice() + "원");
 			}
 		});
 
@@ -66,15 +70,19 @@ public class BaseIngredientController implements Initializable {
 			} else {
 				menuNameField.setDisable(true);
 			}
+
+
 		});
 
 		menuNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			Menu existingMenu = MenuBoard.getInstance().getMenu(newValue);
+
 			if("".equals(newValue)) {
 				// 메뉴명 빈 칸
 				nextBtn.setDisable(true);
 
 				// TODO: 빈칸이라는 표시(Dialog)
-			} else if(MenuBoard.getInstance().getMenu(newValue) != null) {
+			} else if(existingMenu != null) {
 				// 이미 있는 메뉴명
 				nextBtn.setDisable(true);
 
@@ -100,11 +108,10 @@ public class BaseIngredientController implements Initializable {
 				result.getBaseIngredients().addAll(ingredientList);
 				// 새로운 메뉴는 샷 추가만 가능
 				result.addExtraIngredient("샷");
+				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);
 			}
-
-			System.out.println(result);
 
 			// TODO: 다음 화면으로 전환
 		});
@@ -112,5 +119,15 @@ public class BaseIngredientController implements Initializable {
 		ingredientListView.setItems(ingredientList);
 		ingredientListView.setPlaceholder(new Label("재료가 없습니다."));
 		ingredientListView.setCellFactory(new IngredientControlFactory());
+	}
+
+	private int calcBasePrice(List<Ingredient> baseIngredients) {
+		int price = Menu.getBasePrice();
+
+		for(Ingredient ingredient : baseIngredients) {
+			price += ingredient.getCost() * ingredient.getAmount();
+		}
+
+		return price;
 	}
 }

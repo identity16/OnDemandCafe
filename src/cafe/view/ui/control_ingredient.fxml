@@ -8,7 +8,7 @@
 
 <fx:root type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml">
 	<graphic>
-		<HBox alignment="CENTER_LEFT" minWidth="575.0" prefHeight="62.0" prefWidth="575.0" spacing="28.0">
+		<HBox alignment="CENTER_LEFT" minWidth="575.0" prefHeight="62.0" prefWidth="575.0" maxWidth="575.0" spacing="28.0">
 			<Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="503.0" style="-fx-background-color: rgb(224, 224, 224);" text="Ingredient" textAlignment="CENTER">
             <font>
                <Font name="SansSerif Bold" size="24.0" />

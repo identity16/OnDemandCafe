@@ -47,12 +47,18 @@ public class SceneChanger {
 	}
 	
 	public void next(Location dest) {
+		next(dest, null);
+	}
+
+	public void next(Location dest, Object obj) {
 		try {
 			// FXML 로드
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource(dest.getName()));
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
+
+			pane.setUserData(obj);
 
 			if (dest == Location.TITLE)		// 타이틀 화면일 때,
 			{

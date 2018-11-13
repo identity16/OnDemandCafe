@@ -1,7 +1,6 @@
 package cafe.model;
 
 import java.util.*;
-import java.util.function.Function;
 
 public class MenuBoard {
 	private static MenuBoard instance;
@@ -44,21 +43,22 @@ public class MenuBoard {
 			return null;
 		}
 
-		baseIngredients.sort(Comparator.comparing(Ingredient::getName));
+		List<Ingredient> tmpBase = new ArrayList<>(baseIngredients);
+
+		tmpBase.sort(Comparator.comparing(Ingredient::getName));
 
 		for(Menu menu : menuList) {
 			List<Ingredient> menuBase = menu.getBaseIngredients();
-
-			if(baseIngredients.size() != menuBase.size()) continue;
+			if(tmpBase.size() != menuBase.size()) continue;
 
 			menuBase.sort(Comparator.comparing(Ingredient::getName));
 
-			int i=0, len = baseIngredients.size();
 
+			int i=0, len = tmpBase.size();
 			for(; i<len; i++) {
 				// 재료 이름이 같은지 비교
 				if(!menuBase.get(i).getName().equals(
-						baseIngredients.get(i).getName())) break;
+						tmpBase.get(i).getName())) break;
 			}
 
 			// 재료 이름이 전부 같으면 메뉴 리턴
