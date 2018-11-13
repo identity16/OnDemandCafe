@@ -54,9 +54,4 @@ public class MenuControl extends StackPane {
 			throw new RuntimeException(exception);
 		}
 	}
-
-	// Menu Getter
-	public Menu getMenu() {
-		return menu;
-	}
 }

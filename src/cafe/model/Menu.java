@@ -1,5 +1,8 @@
 package cafe.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,7 @@ public class Menu {
 	private static int basePrice = 1000;					// 기본 가격
 	private static final Inventory INVENTORY = Inventory.getInstance();		// 창고
 
-	private String name;							// 메뉴명
+	private StringProperty name;							// 메뉴명
 	private List<Ingredient> baseIngredients;		// 베이스 재료
 	private List<Ingredient> extraIngredients;		// 추가 재료
 	private int price;								// 메뉴 가격
@@ -19,11 +22,23 @@ public class Menu {
 	}
 
 	public Menu(String name, boolean isCustom) {
-		this.name = name;
+		this.name = new SimpleStringProperty(name);
 		this.baseIngredients = new ArrayList<>();
 		this.extraIngredients = new ArrayList<>();
 		this.price = Menu.basePrice;
 		this.isCustom = isCustom;
+	}
+
+	public Menu(Menu menu) {	// Deep Copy
+		this(menu.getName(), menu.isCustom);
+
+		for(Ingredient ingredient : menu.getBaseIngredients()) {
+			this.addBaseIngredient(ingredient.getName());
+		}
+
+		for(Ingredient ingredient : menu.getExtraIngredients()) {
+			this.addExtraIngredient(ingredient.getName());
+		}
 	}
 
 	// 재료명으로 재료 탐색
@@ -103,11 +118,15 @@ public class Menu {
 	}
 
 	public String getName() {
+		return name.get();
+	}
+
+	public StringProperty nameProperty() {
 		return name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name.set(name);
 	}
 
 	public int getPrice() {
@@ -147,5 +166,28 @@ public class Menu {
 
 	public boolean isCustom() {
 		return isCustom;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.append("Menu {\n" + "name=")
+				.append(name)
+				.append(",\n baseIngredients=[");
+
+		baseIngredients.forEach(ingredient -> {
+			stringBuilder.append(ingredient.getName()).append(", ");
+		});
+		stringBuilder.append("],\n extraIngredients=[");
+		extraIngredients.forEach(ingredient -> {
+			stringBuilder.append(ingredient.getName()).append(", ");
+		});
+		stringBuilder.append("],\n price=")
+				.append(price)
+				.append(",\n isCustom=")
+				.append(isCustom).append("\n}");
+
+		return stringBuilder.toString();
 	}
 }
