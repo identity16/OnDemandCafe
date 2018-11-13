@@ -160,7 +160,9 @@ public class Menu {
 		}
 
 		for(Ingredient ingredient : this.extraIngredients) {
-			price += ingredient.getCost() * ingredient.getAmount();
+			if(!baseIngredients.contains(ingredient)) {
+				price += ingredient.getCost() * ingredient.getAmount();
+			}
 		}
 
 		return price;

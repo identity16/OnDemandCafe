@@ -16,6 +16,7 @@ public class Beverage {
 	private IntegerProperty amount;
 	
 	public Beverage(Menu menu) {
+		menu = new Menu(menu);
 		this.name = menu.getName();
 		this.isExtra = false;
 		this.isHot = false;

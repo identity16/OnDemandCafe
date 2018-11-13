@@ -68,6 +68,7 @@ public class ExtraIngredientController implements Initializable {
 			beverage = new Beverage(initMenu);
 			beverage.setExtra(isExtraCheck.isSelected());
 			beverage.setHot(isHot.getSelectedToggle().getUserData().equals("true"));
+			System.out.println("E: " + beverage.isExtra() + ", H: " + beverage.isHot());
 
 			SceneChanger.getInstance().back();
 			SceneChanger.getInstance().back();
@@ -98,7 +99,6 @@ public class ExtraIngredientController implements Initializable {
 
 		for(int i=0; i<extraIngredients.size(); i++) {
 			int amountDiff = extraIngredients.get(i).getAmount() - origList.get(i).getAmount();
-
 			price += origList.get(i).getCost() * amountDiff;
 		}
 

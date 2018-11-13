@@ -116,6 +116,8 @@ public class BaseIngredientController implements Initializable {
 				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);
+				System.out.println(MenuBoard.getInstance().getMenu("아메리카노").getCalcPrice());
+				result.setPrice(existingMenu.getPrice());
 			}
 
 			SceneChanger.getInstance().next(Location.EXTRA, result);
