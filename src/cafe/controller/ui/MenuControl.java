@@ -48,15 +48,10 @@ public class MenuControl extends StackPane {
 				name.setText(menu.getName());
 			});
 			rectangle.setOnMouseClicked(event -> {
-				SceneChanger.getInstance().next(Location.BASE);
+				SceneChanger.getInstance().next(Location.BASE, menu);
 			});
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	// Menu Getter
-	public Menu getMenu() {
-		return menu;
 	}
 }

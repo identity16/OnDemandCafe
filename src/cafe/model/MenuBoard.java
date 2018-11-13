@@ -1,7 +1,6 @@
 package cafe.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MenuBoard {
 	private static MenuBoard instance;
@@ -27,11 +26,43 @@ public class MenuBoard {
 
 
 	// 메뉴 검색
-	public Menu getMenu(String name) {
+	public Menu getMenu(String name) {			// 이름으로
 		if(name == null) return null;
 
 		for(Menu menu : menuList) {
 			if(name.equals(menu.getName())) {
+				return menu;
+			}
+		}
+
+		return null;
+	}
+
+	public Menu getMenu(List<Ingredient> baseIngredients) {		// 베이스 재료 목록으로
+		if(baseIngredients == null) {
+			return null;
+		}
+
+		List<Ingredient> tmpBase = new ArrayList<>(baseIngredients);
+
+		tmpBase.sort(Comparator.comparing(Ingredient::getName));
+
+		for(Menu menu : menuList) {
+			List<Ingredient> menuBase = menu.getBaseIngredients();
+			if(tmpBase.size() != menuBase.size()) continue;
+
+			menuBase.sort(Comparator.comparing(Ingredient::getName));
+
+
+			int i=0, len = tmpBase.size();
+			for(; i<len; i++) {
+				// 재료 이름이 같은지 비교
+				if(!menuBase.get(i).getName().equals(
+						tmpBase.get(i).getName())) break;
+			}
+
+			// 재료 이름이 전부 같으면 메뉴 리턴
+			if(i == len) {
 				return menu;
 			}
 		}
@@ -122,7 +153,7 @@ public class MenuBoard {
 		addMenu(m5);
 		addMenu(m6);
 		addMenu(m7);
-		addMenu(m8, 9000);
+//		addMenu(m8, 9000);
 		addMenu(m9);
 		addMenu(m10);
 		addMenu(m11);

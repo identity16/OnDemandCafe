@@ -17,7 +17,11 @@ public class SceneChanger {
 	public enum Location {
 		TITLE("/cafe/view/title.fxml"),
 		MENU("/cafe/view/menu.fxml"),
-		BASE("/cafe/view/base_ingredients.fxml");
+		BASE("/cafe/view/base_ingredients.fxml"),
+		EXTRA("/cafe/view/extra_ingredients.fxml"),
+		ADMIN("/cafe/view/adminTitle.fxml"),
+		ADMENU("/cafe/view/adminMenu.fxml"),
+		ADING("/cafe/view/adminIngre.fxml");
 		
 		final private String name;
 		
@@ -47,12 +51,18 @@ public class SceneChanger {
 	}
 	
 	public void next(Location dest) {
+		next(dest, null);
+	}
+
+	public void next(Location dest, Object obj) {
 		try {
 			// FXML 로드
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource(dest.getName()));
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
+
+			pane.setUserData(obj);
 
 			if (dest == Location.TITLE)		// 타이틀 화면일 때,
 			{
@@ -62,6 +72,8 @@ public class SceneChanger {
 					{
 						this.next(Location.MENU);
 					}
+					else if (event.getCode() == KeyCode.ENTER)
+						this.next(Location.ADMIN);
 				});
 			}
 

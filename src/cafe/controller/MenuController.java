@@ -1,9 +1,13 @@
 package cafe.controller;
 
+import cafe.SceneChanger;
 import cafe.controller.ui.OrderControlFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -25,6 +29,7 @@ public class MenuController implements Initializable {
 	@FXML ScrollPane scrollPane;
 	@FXML ListView<Beverage> orderListView;
 	@FXML Label totalPriceLabel;
+	@FXML Button btnCan;
 
 	private ObservableList<Beverage> orderedBeverages;
 
@@ -57,6 +62,13 @@ public class MenuController implements Initializable {
 
 		orderedBeverages.addListener((ListChangeListener<? super Beverage>) c -> {	// 리스트에 변화가 생기면 가격 합 갱신
 			totalPriceLabel.setText(String.valueOf(calcTotalPrice()));
+		});
+
+		btnCan.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				SceneChanger.getInstance().back();
+			}
 		});
 	}
 

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="cafe.controller.MenuController">
+<VBox fx:id="root" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="cafe.controller.MenuController">
    <children>
       <Label alignment="CENTER" prefHeight="95.0" prefWidth="151.0" text="MENU" textAlignment="CENTER">
          <font>
@@ -48,7 +48,7 @@
                   <VBox.margin>
                      <Insets bottom="5.0" top="5.0" />
                   </VBox.margin></Button>
-               <Button prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #BBBBBB;" text="주문 취소">
+               <Button fx:id = "btnCan" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #BBBBBB;" text="주문 취소">
 				   <font>
 					   <Font name="SansSerif Bold" size="17.0" />
 				   </font>
