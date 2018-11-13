@@ -12,6 +12,12 @@ public class Ingredient {
 	private IntegerProperty amount;
 
 	// Constructors
+	public Ingredient() {			// Dummy
+		this.name = null;
+		this.cost = null;
+		this.amount = null;
+	}
+
 	public Ingredient(String name, int cost, int amount) {
 		this.name = new SimpleStringProperty(name);
 		this.cost = new SimpleIntegerProperty(cost);
@@ -27,7 +33,7 @@ public class Ingredient {
 	// Getter / Setter / Property Getter
 	public String getName()
 	{
-		return (name.get());
+		return name.get();
 	}
 
 	public void setName(String name)
@@ -41,7 +47,7 @@ public class Ingredient {
 
 	public int getCost()
 	{
-		return (cost.get());
+		return cost.get();
 	}
 
 	public void setCost(int cost)
@@ -55,7 +61,7 @@ public class Ingredient {
 
 	public int getAmount()
 	{
-		return (amount.get());
+		return amount.get();
 	}
 
 	public void setAmount(int amount)
@@ -65,5 +71,9 @@ public class Ingredient {
 
 	public IntegerProperty amountProperty() {
 		return this.amount;
+	}
+
+	public boolean isDummy() {
+		return this.name == null;
 	}
 }

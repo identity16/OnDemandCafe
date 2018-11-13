@@ -41,7 +41,20 @@ public class IngredientControl extends ListCell<Ingredient> {
 			setText("");
 			setContentDisplay(ContentDisplay.TEXT_ONLY);
 		} else {
-			nameLabel.setText(item.getName());
+			if(item.isDummy()) {
+				nameLabel.setText("+");
+				deleteBtn.setVisible(false);
+
+				nameLabel.setOnMouseClicked(event -> {
+					// TODO: 재료 추가 다이얼로그
+					System.out.println("재료 추가!!");
+				});
+			} else {
+				nameLabel.setText(item.getName());
+				nameLabel.setOnMouseClicked(null);
+				deleteBtn.setVisible(true);
+			}
+
 			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		}
 	}

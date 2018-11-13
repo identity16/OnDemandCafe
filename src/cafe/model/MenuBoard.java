@@ -153,7 +153,7 @@ public class MenuBoard {
 		addMenu(m5);
 		addMenu(m6);
 		addMenu(m7);
-		addMenu(m8, 9000);
+//		addMenu(m8, 9000);
 		addMenu(m9);
 		addMenu(m10);
 		addMenu(m11);

@@ -33,9 +33,12 @@ public class BaseIngredientController implements Initializable {
 
 	private ObservableList<Ingredient> ingredientList;
 	private StringProperty menuNameProperty;
+	private Boolean isMenuExist = true;
 
 	public BaseIngredientController() {
 		ingredientList = FXCollections.observableArrayList();
+		ingredientList.add(0, new Ingredient());	// 추가 버튼 위치
+
 		menuNameProperty = new SimpleStringProperty(null);
 	}
 
@@ -52,26 +55,28 @@ public class BaseIngredientController implements Initializable {
 		});
 
 		// Event Handling
-		ingredientList.addListener((ListChangeListener<Ingredient>) c -> {
-			Menu existingMenu = MenuBoard.getInstance().getMenu(ingredientList);
+		ingredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
+			// 첫 번째 Null(추가 버튼) 뺀 subList
+			List<Ingredient> withoutNull = ingredientList.subList(1, ingredientList.size());
 
-			if(existingMenu == null) {
+			Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
+			isMenuExist = existingMenu != null;
+
+			if(!isMenuExist) {
 				menuNameProperty.setValue("");
-				priceLabel.setText(calcBasePrice(ingredientList) + "원");
+				priceLabel.setText(calcBasePrice(withoutNull) + "원");
 			} else {
 				menuNameProperty.setValue(existingMenu.getName());
 				priceLabel.setText(existingMenu.getPrice() + "원");
 			}
 		});
 
-		menuNameProperty.addListener((observable, oldValue, newValue) -> {
-			if("".equals(newValue)) {
+		menuNameProperty.addListener((observable, oldValue, newValue) -> {			// 메뉴 이름 변경 이벤트
+			if(!isMenuExist) {
 				menuNameField.setDisable(false);
 			} else {
 				menuNameField.setDisable(true);
 			}
-
-
 		});
 
 		menuNameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,15 +85,9 @@ public class BaseIngredientController implements Initializable {
 			if("".equals(newValue)) {
 				// 메뉴명 빈 칸
 				nextBtn.setDisable(true);
-
-				// TODO: 빈칸이라는 표시(Dialog)
 			} else if(existingMenu != null) {
 				// 이미 있는 메뉴명
 				nextBtn.setDisable(true);
-
-				if(!menuNameField.isDisable()) {
-					// TODO: 이미 있는 메뉴명이라는 표시(Dialog)
-				}
 			} else {
 				nextBtn.setDisable(false);
 			}
@@ -105,7 +104,7 @@ public class BaseIngredientController implements Initializable {
 			if(existingMenu == null) {	// 새로운 메뉴이면
 				result = new Menu(name);
 
-				result.getBaseIngredients().addAll(ingredientList);
+				result.getBaseIngredients().addAll(ingredientList.subList(1, ingredientList.size()));
 				// 새로운 메뉴는 샷 추가만 가능
 				result.addExtraIngredient("샷");
 				result.setPrice(result.getCalcPrice());
