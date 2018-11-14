@@ -1,9 +1,6 @@
 .idea/
 .classpath
 out/
-<<<<<<< HEAD
 /bin/
-=======
 *.iml
->>>>>>> refs/heads/master
 /.project

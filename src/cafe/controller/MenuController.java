@@ -71,13 +71,11 @@ public class MenuController implements Initializable {
 			totalPriceLabel.setText(String.valueOf(calcTotalPrice()));
 		});
 
-		btnComplete.setOnAction(event -> {
-			// TODO: 주문 완료 화면 넘기기
-		});
+		btnComplete.setOnAction(event -> SceneChanger.getInstance().next(SceneChanger.Location.RESULT, orderedBeverages.toArray()));
 
 		btnCancel.setOnAction(event -> {
 			// 주문 초기화
-			orderedBeverages = FXCollections.observableArrayList();
+			resetOrderedBeverages();
 			SceneChanger.getInstance().back();
 		});
 	}
@@ -91,5 +89,9 @@ public class MenuController implements Initializable {
 		}
 
 		return totalPrice;
+	}
+
+	public static void resetOrderedBeverages() {
+		orderedBeverages = FXCollections.observableArrayList();
 	}
 }

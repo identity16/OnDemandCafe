@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 public class CoffeeBeanController implements Initializable {
 	@FXML private VBox root;
 	@FXML private TextField menuNameField;
+	@FXML private ScrollPane coffeeBeanOuterContainer;
 	@FXML private TilePane coffeeBeanContainer;
 	@FXML private Label priceLabel;
 	@FXML private Button prevBtn;
@@ -42,7 +44,13 @@ public class CoffeeBeanController implements Initializable {
 
 		});
 
+		nextBtn.setDisable(true);
 		menuNameField.setDisable(true);
+
+		coffeeBeanContainer.setStyle("-fx-focus-color: transparent;");
+		coffeeBeanContainer.setStyle("-fx-background-color: white;");
+		coffeeBeanOuterContainer.setStyle("-fx-focus-color: transparent;");
+		coffeeBeanOuterContainer.setStyle("-fx-background-color: white;");
 
 		// Control 추가
 		for (CoffeeBean.Origin origin : CoffeeBean.Origin.values()) {
@@ -57,10 +65,14 @@ public class CoffeeBeanController implements Initializable {
 					BaseChoiceControl control = (BaseChoiceControl) node;
 
 					control.choiceCircle.setFill(Color.rgb(221, 221, 221));
+					control.nameLabel.setTextFill(Color.BLACK);
 				});
 
 				selected = origin;
-				baseChoiceControl.choiceCircle.setFill(Color.RED);
+				baseChoiceControl.choiceCircle.setFill(Color.rgb(111, 78, 55));
+				baseChoiceControl.nameLabel.setTextFill(Color.WHITE);
+
+				nextBtn.setDisable(false);
 			});
 
 			coffeeBeanContainer.getChildren().add(baseChoiceControl);

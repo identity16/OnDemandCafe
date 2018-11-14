@@ -10,7 +10,9 @@ public class CoffeeBean extends Ingredient{
 		BRAZIL("브라질"),
 		CHILE("칠레"),
 		KOREA("한국"),
-		CHINA("중국");
+		CHINA("중국"),
+		ETHIOPIA("에티오피아"),
+		LUWAK("코피 루왁");
 
 		final private String name;
 
