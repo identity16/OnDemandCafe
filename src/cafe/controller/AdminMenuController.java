@@ -38,19 +38,19 @@ public class AdminMenuController implements Initializable {
     @FXML private Button btnCan, btnSave;
     @FXML private Button btnOpt;
     @FXML private TilePane menuPane;
-
     @FXML private TextField editMenuPrice;
     @FXML private TextField editBasicPrice;
     @FXML private TextField txtMenuField;
+
     @FXML private RadioButton radioBasic;
     @FXML private RadioButton radioCustom;
+    @FXML private CheckBox checkBox;
 
     private List<Menu> menuList = MenuBoard.getInstance().getMenuList();
     private ObservableList<Ingredient> baseIngredientList;
+    private Menu existingMenu; //현재 접근하고 있는 메뉴
 
     private StringProperty menuNameProperty, menuPriceProperty;
-
-    private Boolean isMenuExist = true;
 
     public AdminMenuController() {
         baseIngredientList = FXCollections.observableArrayList();
@@ -72,21 +72,23 @@ public class AdminMenuController implements Initializable {
         baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
             // 첫 번째 Null(추가 버튼) 뺀 subList
 
-            if(baseIngredientList.size() == 0){}
-            List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
+            if(baseIngredientList.size() > 1) {
+                List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
 
-            Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
-            isMenuExist = existingMenu != null;
+                existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
+                boolean isMenuExist = existingMenu != null;
 
-            if(!isMenuExist) {
-                editMenuPrice.clear();
-                txtMenuField.clear();
-            } else {
-                menuNameProperty.setValue(existingMenu.getName());
-                menuPriceProperty.setValue(""+existingMenu.getPrice());
+                if (!isMenuExist) {
+                    editMenuPrice.clear();
+                    txtMenuField.clear();
+                } else {
+                    menuNameProperty.setValue(existingMenu.getName());
+
+                    existingMenu.getCalcPrice();
+                    menuPriceProperty.setValue("" + existingMenu.getPrice());
+                }
             }
         });
-
 
         /* 메뉴 리스트 관련 초기화 */
         listingMenu(menuList, false);
@@ -102,11 +104,27 @@ public class AdminMenuController implements Initializable {
         radioBasic.setOnAction(event -> handleBasic(event));
         radioCustom.setOnAction(event -> handleCustom(event));
 
+        //체크박스 리스너
+        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue) {
+                    editMenuPrice.setDisable(true);
+                    if(existingMenu != null)
+                        menuPriceProperty.setValue("" + existingMenu.getCalcPrice());
+                }
+                else
+                    editMenuPrice.setDisable(false);
+            }
+        });
+
         /* 기타 옵션들 관련 초기화 */
         final ToggleGroup group = new ToggleGroup();
         radioBasic.setToggleGroup(group);
         radioCustom.setToggleGroup(group);
         radioBasic.setSelected(true);
+
+        checkBox.setSelected(true);
+        editMenuPrice.setDisable(true);
 
         editBasicPrice.setText(String.valueOf(Menu.getBasePrice()));
 
@@ -119,8 +137,8 @@ public class AdminMenuController implements Initializable {
     private void handleSave(ActionEvent event) {
 
         String basicPrice = editBasicPrice.getText();
+        System.out.println(Integer.parseInt(basicPrice));
         Menu.setBasePrice(Integer.parseInt(basicPrice));
-
     }
     private void handleBasic(ActionEvent event) {
         listingMenu(menuList, false);
@@ -146,7 +164,8 @@ public class AdminMenuController implements Initializable {
         // 값 초기화
         Platform.runLater(() -> {
             if(!menu.isDummy()) {
-                ingreListView.getItems().removeAll();
+                ingreListView.getItems().clear();
+                baseIngredientList.add(0, new Ingredient());
                 menuNameProperty.setValue(menu.getName());
                 baseIngredientList.addAll(menu.getBaseIngredients());
             }
@@ -156,14 +175,5 @@ public class AdminMenuController implements Initializable {
         ingreListView.setPlaceholder(new Label("재료가 없습니다."));
         ingreListView.setCellFactory(new IngredientControlFactory());
 
-    }
-    private int calcBasePrice(List<Ingredient> baseIngredients) {
-        int price = Menu.getBasePrice();
-
-        for(Ingredient ingredient : baseIngredients) {
-            price += ingredient.getCost() * ingredient.getAmount();
-        }
-
-        return price;
     }
 }
