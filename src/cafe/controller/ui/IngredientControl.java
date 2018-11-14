@@ -1,13 +1,13 @@
 package cafe.controller.ui;
 
-import cafe.Main;
+import cafe.SceneChanger;
 import cafe.model.Ingredient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ public class IngredientControl extends ListCell<Ingredient> {
 				deleteBtn.setVisible(false);
 
 				nameLabel.setOnMouseClicked(event -> {
-					SceneChanger.getInstance().newDialog(Location.ADD_BASE).initDialog(getListView().getItems());
+					SceneChanger.getInstance().newDialog(SceneChanger.Location.ADD_BASE).initDialog(getListView().getItems());
 					System.out.println("재료 추가!!");
 				});
 			} else {
