@@ -54,6 +54,7 @@ public class AdminMenuController implements Initializable {
 
     public AdminMenuController() {
         baseIngredientList = FXCollections.observableArrayList();
+
         menuNameProperty = new SimpleStringProperty(null);
         menuPriceProperty = new SimpleStringProperty(null);
     }
@@ -63,13 +64,15 @@ public class AdminMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         /* 재료 리스트 관련 이벤트 */
-/*
+
         // 메뉴 이름,가격 텍스트필드 바인딩
         menuNameProperty.bindBidirectional(txtMenuField.textProperty());
         menuPriceProperty.bindBidirectional(editMenuPrice.textProperty());
         //        // Event Handling
         baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
             // 첫 번째 Null(추가 버튼) 뺀 subList
+
+            if(baseIngredientList.size() == 0){}
             List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
 
             Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
@@ -83,7 +86,7 @@ public class AdminMenuController implements Initializable {
                 menuPriceProperty.setValue(""+existingMenu.getPrice());
             }
         });
-*/
+
 
         /* 메뉴 리스트 관련 초기화 */
         listingMenu(menuList, false);
@@ -143,9 +146,8 @@ public class AdminMenuController implements Initializable {
         // 값 초기화
         Platform.runLater(() -> {
             if(!menu.isDummy()) {
-                ingreListView.getItems().clear();
+                ingreListView.getItems().removeAll();
                 menuNameProperty.setValue(menu.getName());
-                baseIngredientList.add(0, new Ingredient());	// 추가 버튼 위치
                 baseIngredientList.addAll(menu.getBaseIngredients());
             }
         });
