@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 import cafe.controller.AddBaseDialogController;
+import cafe.controller.DialogController;
 import cafe.model.Ingredient;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -103,7 +104,7 @@ public class SceneChanger {
 		}
 	}
 
-	public AddBaseDialogController newDialog(Location dest)
+	public DialogController newDialog(Location dest)
 	{
 		Popup dialog = new Popup();
 		FXMLLoader loader = new FXMLLoader();
