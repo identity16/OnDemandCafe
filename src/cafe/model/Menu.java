@@ -79,7 +79,12 @@ public class Menu {
 			if(extra != null) {
 				baseIngredients.add(extra);
 			} else {
-				baseIngredients.add(new Ingredient(invIngredient, 1));
+				if(invIngredient instanceof CoffeeBean) {
+					baseIngredients.add(new CoffeeBean(invIngredient, 1));
+				} else {
+					baseIngredients.add(new Ingredient(invIngredient, 1));
+
+				}
 			}
 		}
 	}
@@ -102,7 +107,12 @@ public class Menu {
 			if(base != null) {
 				extraIngredients.add(base);
 			} else {
-				extraIngredients.add(new Ingredient(invIngredient, 0));
+				if(invIngredient instanceof CoffeeBean) {
+					extraIngredients.add(new CoffeeBean(invIngredient, 0));
+				} else {
+					extraIngredients.add(new Ingredient(invIngredient, 0));
+
+				}
 			}
 		}
 	}

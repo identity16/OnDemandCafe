@@ -7,7 +7,6 @@ import cafe.model.Ingredient;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,9 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javafx.beans.value.ChangeListener;
 import java.net.URL;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ExtraIngredientController implements Initializable {
 	@FXML private VBox root;
@@ -28,7 +28,9 @@ public class ExtraIngredientController implements Initializable {
 	@FXML private Button prevBtn;
 	@FXML private Button nextBtn;
 	@FXML private CheckBox isExtraCheck;
+	@FXML private VBox leftContainer;
 	@FXML private HBox extraContainer;
+	@FXML private ScrollPane extraOuterContainer;
 
 	private ObservableList<Ingredient> extraIngredientList;
 	private Beverage beverage;
@@ -77,6 +79,10 @@ public class ExtraIngredientController implements Initializable {
 					});
 
 					extraContainer.getChildren().add(baseChoice);
+				}
+
+				if(extraIngredientList.size() == 0) {
+					leftContainer.getChildren().remove(extraOuterContainer);
 				}
 			}
 		});
