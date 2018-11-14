@@ -44,10 +44,13 @@ public class MenuController implements Initializable {
 			Beverage beverage = (Beverage) root.getUserData();
 
 			if(beverage != null) {
-				// 수량 변화에 따른 가격 합 갱신
-				beverage.amountProperty().addListener(
-						(observable, oldValue, newValue) -> totalPriceLabel.setText(String.valueOf(calcTotalPrice())));
 				orderedBeverages.add(beverage);
+				for(Beverage b : orderedBeverages) {
+					// 수량 변화에 따른 가격 합 갱신
+					b.amountProperty().addListener(
+							(observable, oldValue, newValue) -> totalPriceLabel.setText(String.valueOf(calcTotalPrice())));
+				}
+
 			}
 		});
 
@@ -68,12 +71,11 @@ public class MenuController implements Initializable {
 			totalPriceLabel.setText(String.valueOf(calcTotalPrice()));
 		});
 
-		btnComplete.setOnAction(event -> {
-			// TODO: 주문 완료 화면 넘기기
-		});
+		btnComplete.setOnAction(event -> SceneChanger.getInstance().next(SceneChanger.Location.RESULT, orderedBeverages.toArray()));
+
 		btnCancel.setOnAction(event -> {
 			// 주문 초기화
-			orderedBeverages = FXCollections.observableArrayList();
+			resetOrderedBeverages();
 			SceneChanger.getInstance().back();
 		});
 	}
@@ -87,5 +89,9 @@ public class MenuController implements Initializable {
 		}
 
 		return totalPrice;
+	}
+
+	public static void resetOrderedBeverages() {
+		orderedBeverages = FXCollections.observableArrayList();
 	}
 }

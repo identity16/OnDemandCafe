@@ -26,6 +26,7 @@ public class SceneChanger {
 		EXTRA("/cafe/view/extra_ingredients.fxml"),
 		COFFE_BEAN("/cafe/view/coffee_bean.fxml"),
 		ADD_BASE("/cafe/view/add_base_dialog.fxml"),
+		RESULT("/cafe/view/order_result.fxml"),
 		ADMIN("/cafe/view/adminTitle.fxml"),
 		ADMENU("/cafe/view/adminMenu.fxml"),
 		ADING("/cafe/view/adminIngre.fxml");
@@ -112,15 +113,21 @@ public class SceneChanger {
 			dialog.getContent().add(vBox);
 			dialog.show(primaryStage);
 			dialog.setAutoHide(true);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return loader.getController();
 	}
-	
+
 	public Stage getPrimaryStage()
 	{
 		return primaryStage;
+	}
+
+	public void backToTitle() {
+		while(sceneStack.size() > 1) {
+			back();
+		}
 	}
 }

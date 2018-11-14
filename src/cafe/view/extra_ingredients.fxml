@@ -22,7 +22,7 @@
       </font>
    </Label>
    <HBox alignment="CENTER" spacing="30.0">
-      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0">
+      <VBox fx:id="leftContainer" alignment="CENTER" prefHeight="500.0" prefWidth="600.0" maxWidth="600" spacing="30.0">
          <HBox alignment="CENTER" spacing="100.0">
             <RadioButton mnemonicParsing="false" selected="true" text="ICE" textFill="BLUE" userData="false">
                <toggleGroup>
@@ -43,11 +43,11 @@
                <Font name="SansSerif Bold" size="20.0" />
             </font>
          </CheckBox>
-         <ScrollPane hbarPolicy="NEVER" prefHeight="300.0" prefWidth="540.0" style="-fx-background-color: transparent;">
+         <ScrollPane fx:id="extraOuterContainer" vbarPolicy="NEVER" prefHeight="350.0" prefWidth="540.0" maxWidth="540.0" style="-fx-background: #FFFFFF;-fx-border-color: #FFFFFF;">
             <VBox.margin>
                <Insets />
             </VBox.margin>
-            <VBox prefWidth="600.0" />
+            <HBox fx:id="extraContainer" minWidth="535.0" prefWidth="535.0" prefHeight="350.0" style="-fx-background-color: white;"/>
          </ScrollPane>
       </VBox>
       <VBox prefHeight="505.0" prefWidth="474.0">

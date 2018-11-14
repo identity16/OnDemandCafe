@@ -1,8 +1,6 @@
 package cafe.controller.ui;
 
 import cafe.Main;
-import cafe.SceneChanger;
-import cafe.SceneChanger.Location;
 import cafe.model.Ingredient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

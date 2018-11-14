@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.AddBaseDialogController">
+<VBox prefHeight="300.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="cafe.controller.AddBaseDialogController">
    <children>
       <ScrollPane prefHeight="250.0" prefWidth="1090.0" vbarPolicy="NEVER">
          <content>
@@ -17,7 +17,7 @@
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="44.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(52, 152, 219)rgb(52, 152, 219); -fx-background-radius: 20;" text="ADD" textFill="WHITE" fx:id="addBtn">
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 20;" text="ADD" textFill="WHITE" fx:id="addBtn">
                <font>
                   <Font name="SansSerif Bold" size="15.0" />
                </font>

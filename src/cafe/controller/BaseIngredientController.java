@@ -48,6 +48,8 @@ public class BaseIngredientController implements Initializable {
 		// 메뉴 이름, 텍스트필드 바인딩
 		menuNameProperty.bindBidirectional(menuNameField.textProperty());
 
+		ingredientListView.setStyle("-fx-control-inner-background: white;");
+
 		// 값 초기화
 		Platform.runLater(() -> {
 			Menu initMenu = (Menu) root.getUserData();
@@ -66,6 +68,7 @@ public class BaseIngredientController implements Initializable {
 			Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
 			isMenuExist = existingMenu != null;
 
+
 			if(!isMenuExist) {
 				menuNameProperty.setValue("");
 				priceLabel.setText(calcBasePrice(withoutNull) + "원");
@@ -76,8 +79,11 @@ public class BaseIngredientController implements Initializable {
 		});
 
 		menuNameProperty.addListener((observable, oldValue, newValue) -> {			// 메뉴 이름 변경 이벤트
-			if(!isMenuExist) {
+			if(!isMenuExist && baseIngredientList.size() > 1) {
 				menuNameField.setDisable(false);
+				nextBtn.setDisable(true);
+			} else if(!isMenuExist) {
+				menuNameField.setDisable(true);
 				nextBtn.setDisable(true);
 			} else {
 				menuNameField.setDisable(true);
@@ -96,6 +102,10 @@ public class BaseIngredientController implements Initializable {
 				nextBtn.setDisable(true);
 			} else {
 				nextBtn.setDisable(false);
+			}
+
+			if(baseIngredientList.size() == 0) {
+				menuNameField.setDisable(true);
 			}
 		});
 
@@ -116,6 +126,8 @@ public class BaseIngredientController implements Initializable {
 					// 새로운 메뉴는 샷 추가만 가능
 					result.addExtraIngredient("샷");
 				}
+
+				MenuBoard.getInstance().addMenu(result);
 
 				result.setPrice(result.getCalcPrice());
 			} else {
@@ -140,7 +152,7 @@ public class BaseIngredientController implements Initializable {
 
 		return price;
 	}
-	
+
 	public ObservableList<Ingredient> getBaseIngredientList()
 	{
 		return baseIngredientList;
