@@ -5,17 +5,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.TilePane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller = "cafe.controller.AdminMenuController" >
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.AdminMenuController">
    <children>
       <SplitPane dividerPositions="0.45" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -48,7 +47,7 @@
                         <Font name="SansSerif Regular" size="21.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="radioCustom" selected ="true" layoutX="293.0" layoutY="33.0" mnemonicParsing="false" text="Custom Menu">
+                  <RadioButton fx:id="radioCustom" layoutX="293.0" layoutY="33.0" mnemonicParsing="false" selected="true" text="Custom Menu">
                      <font>
                         <Font name="SansSerif Regular" size="21.0" />
                      </font>
@@ -89,7 +88,7 @@
                   </Button>
                   <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="387.0" prefWidth="592.0">
                      <content>
-                        <VBox fx:id="ingrePane" prefHeight="385.0" prefWidth="590.0" />
+                        <ListView fx:id="ingreListView" prefHeight="385.0" prefWidth="591.0" />
                      </content>
                   </ScrollPane>
                </children></AnchorPane>
@@ -109,7 +108,10 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <TextField fx:id="txtMenuName" layoutX="638.0" layoutY="23.0" prefHeight="52.0" prefWidth="421.0" />
+      <TextField fx:id="txtMenuField" layoutX="638.0" layoutY="23.0" prefHeight="52.0" prefWidth="421.0">
+         <font>
+            <Font size="26.0" />
+         </font></TextField>
       <Button fx:id="btnOpt" layoutX="1065.0" layoutY="22.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="85.0" text="Option" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="22.0">
          <font>
             <Font name="SansSerif Regular" size="19.0" />
