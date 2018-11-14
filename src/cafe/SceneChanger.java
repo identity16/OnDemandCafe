@@ -1,12 +1,17 @@
 package cafe;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Stack;
 
+import cafe.controller.AddBaseDialogController;
+import cafe.model.Ingredient;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class SceneChanger {
@@ -20,6 +25,7 @@ public class SceneChanger {
 		BASE("/cafe/view/base_ingredients.fxml"),
 		EXTRA("/cafe/view/extra_ingredients.fxml"),
 		COFFE_BEAN("/cafe/view/coffee_bean.fxml"),
+		ADD_BASE("/cafe/view/add_base_dialog.fxml"),
 		ADMIN("/cafe/view/adminTitle.fxml"),
 		ADMENU("/cafe/view/adminMenu.fxml"),
 		ADING("/cafe/view/adminIngre.fxml");
@@ -94,5 +100,27 @@ public class SceneChanger {
 			primaryStage.setScene(sceneStack.peek());
 			primaryStage.show();
 		}
+	}
+
+	public AddBaseDialogController newDialog(Location dest)
+	{
+		Popup dialog = new Popup();
+		FXMLLoader loader = new FXMLLoader();
+		try {
+			loader.setLocation(Main.class.getResource(dest.getName()));
+			VBox vBox = loader.load();
+			dialog.getContent().add(vBox);
+			dialog.show(primaryStage);
+			dialog.setAutoHide(true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return loader.getController();
+	}
+	
+	public Stage getPrimaryStage()
+	{
+		return primaryStage;
 	}
 }

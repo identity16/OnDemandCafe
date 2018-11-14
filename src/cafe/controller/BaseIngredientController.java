@@ -140,4 +140,9 @@ public class BaseIngredientController implements Initializable {
 
 		return price;
 	}
+	
+	public ObservableList<Ingredient> getBaseIngredientList()
+	{
+		return baseIngredientList;
+	}
 }

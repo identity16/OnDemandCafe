@@ -17,12 +17,12 @@
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="44.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(52, 152, 219)rgb(52, 152, 219); -fx-background-radius: 20;" text="ADD" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(52, 152, 219)rgb(52, 152, 219); -fx-background-radius: 20;" text="ADD" textFill="WHITE" fx:id="addBtn">
                <font>
                   <Font name="SansSerif Bold" size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(230, 230, 230); -fx-background-radius: 20;" text="CANCEL" textFill="#838383">
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: rgb(230, 230, 230); -fx-background-radius: 20;" text="CANCEL" textFill="#838383" fx:id="cancelBtn">
                <font>
                   <Font name="SansSerif Bold" size="15.0" />
                </font>

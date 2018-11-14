@@ -18,14 +18,15 @@ public class BaseChoiceControl extends VBox{
 	@FXML public Circle	choiceCircle;
 	@FXML public HBox		amountContainer;
 	
-	private int			clickedCount = 0;
+	private boolean		isClicked = false;
 	private Ingredient	ingredient;
 	
-	public BaseChoiceControl() {
+	public BaseChoiceControl(Ingredient ingredient) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cafe/view/ui/control_base_choice.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
+		this.ingredient = ingredient;
 		
 		try {
 			fxmlLoader.load();
@@ -35,11 +36,16 @@ public class BaseChoiceControl extends VBox{
 		}
 	}
 
-	public int getClickedCount() {
-		return clickedCount;
+	public boolean getIsClicked() {
+		return isClicked;
 	}
 
-	public void setClickedCount(int clickedCount) {
-		this.clickedCount = clickedCount;
+	public void setIsClicked(boolean clickedCount) {
+		this.isClicked = clickedCount;
+	}
+	
+	public Ingredient getIngredient()
+	{
+		return ingredient;
 	}
 }
