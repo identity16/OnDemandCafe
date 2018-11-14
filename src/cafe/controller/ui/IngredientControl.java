@@ -53,7 +53,6 @@ public class IngredientControl extends ListCell<Ingredient> {
 				nameLabel.setOnMouseClicked(event -> {
 					((AddBaseDialogController) SceneChanger.getInstance()
 							.newDialog(SceneChanger.Location.ADD_BASE)).initDialog(getListView().getItems());
-					System.out.println("재료 추가!!");
 				});
 			} else {
 				nameLabel.setText(item.getName());

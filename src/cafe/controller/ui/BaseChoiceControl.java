@@ -20,13 +20,20 @@ public class BaseChoiceControl extends VBox {
 	@FXML public TextField amountField;
 	@FXML public Label defaultAmountLabel;
 
+	private Ingredient ingredient;
+
 	private boolean		isClicked = false;
 
 	public BaseChoiceControl() {
+		this(null);
+	}
 
+	public BaseChoiceControl(Ingredient ingredient) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cafe/view/ui/control_base_choice.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
+
+		this.ingredient = ingredient;
 
 		try {
 			fxmlLoader.load();
@@ -42,5 +49,9 @@ public class BaseChoiceControl extends VBox {
 
 	public void setClicked(boolean clicked) {
 		isClicked = clicked;
+	}
+
+	public Ingredient getIngredient() {
+		return ingredient;
 	}
 }

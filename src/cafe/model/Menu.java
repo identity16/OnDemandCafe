@@ -41,10 +41,12 @@ public class Menu {
 
 		for(Ingredient ingredient : menu.getBaseIngredients()) {
 			this.addBaseIngredient(ingredient.getName());
+			this.baseIngredients.get(baseIngredients.size()-1).setAmount(ingredient.getAmount());
 		}
 
 		for(Ingredient ingredient : menu.getExtraIngredients()) {
 			this.addExtraIngredient(ingredient.getName());
+			this.extraIngredients.get(extraIngredients.size()-1).setAmount(ingredient.getAmount());
 		}
 	}
 

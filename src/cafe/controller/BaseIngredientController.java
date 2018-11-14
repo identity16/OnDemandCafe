@@ -57,6 +57,8 @@ public class BaseIngredientController implements Initializable {
 			if(!initMenu.isDummy()) {
 				menuNameProperty.setValue(initMenu.getName());
 				baseIngredientList.addAll(initMenu.getBaseIngredients());
+			} else {
+				menuNameProperty.setValue("");
 			}
 		});
 
@@ -68,44 +70,40 @@ public class BaseIngredientController implements Initializable {
 			Menu existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
 			isMenuExist = existingMenu != null;
 
-
-			if(!isMenuExist) {
-				menuNameProperty.setValue("");
-				priceLabel.setText(calcBasePrice(withoutNull) + "원");
+			if(baseIngredientList.size() > 1) {
+				if (!isMenuExist) {
+					menuNameField.setDisable(false);
+					nextBtn.setDisable(true);
+					menuNameProperty.setValue("");
+					priceLabel.setText(calcBasePrice(withoutNull) + "원");
+				} else {
+					menuNameField.setDisable(true);
+					nextBtn.setDisable(false);
+					menuNameProperty.setValue(existingMenu.getName());
+					priceLabel.setText(existingMenu.getPrice() + "원");
+				}
 			} else {
-				menuNameProperty.setValue(existingMenu.getName());
-				priceLabel.setText(existingMenu.getPrice() + "원");
+				menuNameField.setDisable(true);
+				nextBtn.setDisable(true);
+				menuNameProperty.setValue("");
+				priceLabel.setText("0원");
 			}
 		});
 
 		menuNameProperty.addListener((observable, oldValue, newValue) -> {			// 메뉴 이름 변경 이벤트
-			if(!isMenuExist && baseIngredientList.size() > 1) {
-				menuNameField.setDisable(false);
-				nextBtn.setDisable(true);
-			} else if(!isMenuExist) {
-				menuNameField.setDisable(true);
-				nextBtn.setDisable(true);
-			} else {
-				menuNameField.setDisable(true);
-				nextBtn.setDisable(false);
-			}
-		});
+			if(!isMenuExist) {
+				// 존재하는 메뉴의 이름인지 판별
+				Menu existingMenu = MenuBoard.getInstance().getMenu(newValue);
 
-		menuNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-			Menu existingMenu = MenuBoard.getInstance().getMenu(newValue);
-
-			if("".equals(newValue)) {
-				// 메뉴명 빈 칸
-				nextBtn.setDisable(true);
-			} else if(existingMenu != null) {
-				// 이미 있는 메뉴명
-				nextBtn.setDisable(true);
-			} else {
-				nextBtn.setDisable(false);
-			}
-
-			if(baseIngredientList.size() == 0) {
-				menuNameField.setDisable(true);
+				if ("".equals(newValue)) {
+					// 메뉴명 빈 칸
+					nextBtn.setDisable(true);
+				} else if (existingMenu != null) {
+					// 이미 있는 메뉴명
+					nextBtn.setDisable(true);
+				} else {
+					nextBtn.setDisable(false);
+				}
 			}
 		});
 
