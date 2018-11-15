@@ -1,9 +1,11 @@
 package cafe.controller;
 
 import cafe.SceneChanger;
+import cafe.controller.ui.BaseChoiceControl;
 import cafe.controller.ui.IngredientControlFactory;
 import cafe.controller.ui.MenuControl;
 import cafe.model.Ingredient;
+import cafe.model.Inventory;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
 import javafx.application.Platform;
@@ -14,14 +16,18 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 
 import javax.xml.bind.PrintConversionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle ;
 
@@ -62,6 +68,7 @@ public class AdminMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         /* 재료 리스트 관련 이벤트 */
 
         // 메뉴 이름,가격 텍스트필드 바인딩
@@ -75,6 +82,7 @@ public class AdminMenuController implements Initializable {
         btnCan.setOnAction(this::handleCan);
         btnSave.setOnAction(this::handleSave);
         btnDel.setOnAction(this::handleDel);
+        btnOpt.setOnAction(this::handleOpt);
         radioBasic.setOnAction(this::handleBasic);
         radioCustom.setOnAction(this::handleCustom);
 
@@ -161,13 +169,32 @@ public class AdminMenuController implements Initializable {
         radioCustom.setToggleGroup(group);
         radioBasic.setSelected(true);
 
+        btnOpt.setDisable(true);
         checkBox.setSelected(true);
         editMenuPrice.setDisable(true);
-
         editBasicPrice.setText(String.valueOf(Menu.getBasePrice()));
 
     }
+    private void handleOpt(ActionEvent event) {
+        List<Ingredient> temp = new ArrayList<Ingredient>();
 
+        ((AddBaseDialogController) SceneChanger.getInstance()
+                .newDialog(SceneChanger.Location.ADD_BASE)).initDialog(temp);
+
+        AddBaseDialogController control = new AddBaseDialogController();
+
+        control.addBtn.setOnAction(event2 -> {
+            for (Node node : control.ingredientPane.getChildren()) {
+
+                BaseChoiceControl control2 = (BaseChoiceControl) node;
+                if (!control2.isClicked()) {
+                    currentMenu.addExtraIngredient(control2.nameLabel.getText());
+                    System.out.println(control2.nameLabel.getText());
+                }
+            }
+            control.addBtn.getScene().getWindow().hide();
+        });
+    }
     private void handleCan(ActionEvent event) {
         SceneChanger.getInstance().back();
     }
@@ -249,6 +276,7 @@ public class AdminMenuController implements Initializable {
     private void listingIngre(Menu menu) {
         this.currentMenu = menu;
 
+        btnOpt.setDisable(false);
         btnDel.setDisable(menu.isDummy());
 
         // 값 초기화
