@@ -29,7 +29,7 @@ public class AdminMenuController implements Initializable {
     @FXML private ListView<Ingredient> ingreListView;
     @FXML private AnchorPane root;
 
-    @FXML private Button btnCan, btnSave;
+    @FXML private Button btnCan, btnSave, btnDel;
     @FXML private Button btnOpt;
     @FXML private TilePane menuPane;
     @FXML private TextField editMenuPrice;
@@ -71,6 +71,7 @@ public class AdminMenuController implements Initializable {
         /* 버튼 이벤트 관련 초기화 */
         btnCan.setOnAction(this::handleCan);
         btnSave.setOnAction(this::handleSave);
+        btnDel.setOnAction(this::handleDel);
         radioBasic.setOnAction(this::handleBasic);
         radioCustom.setOnAction(this::handleCustom);
 
@@ -181,12 +182,23 @@ public class AdminMenuController implements Initializable {
 
         listingMenu(menuList, radioCustom.isSelected());
     }
+
+    private void handleDel(ActionEvent event) {
+        if(!currentMenu.isDummy()) {
+            menuList.remove(currentMenu);
+
+            this.currentMenu = menuList.get(0);     // current = dummy
+            listingMenu(menuList, radioCustom.isSelected());
+            listingIngre(currentMenu);
+        }
+    }
+
     private void handleBasic(ActionEvent event) {
         listingMenu(menuList, false);
     }
     private void handleCustom(ActionEvent event) {
         listingMenu(menuList, true);
-    };
+    }
 
     private void listingMenu(List<Menu> menuList, boolean isCustom) {     //메뉴를 나열해주는 함수
         menuPane.getChildren().clear();
@@ -203,6 +215,8 @@ public class AdminMenuController implements Initializable {
     }
     private void listingIngre(Menu menu) {
         this.currentMenu = menu;
+
+        btnDel.setDisable(menu.isDummy());
 
         // 값 초기화
         Platform.runLater(() -> {
