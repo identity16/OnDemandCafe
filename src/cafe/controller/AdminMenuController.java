@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle ;
 
@@ -49,6 +50,7 @@ public class AdminMenuController implements Initializable {
     private List<Menu> menuList = MenuBoard.getInstance().getMenuList();
     private ObservableList<Ingredient> baseIngredientList;
     private Menu existingMenu; //현재 접근하고 있는 메뉴
+    int tempBasePrice = Menu.getBasePrice();
 
     private StringProperty menuNameProperty, menuPriceProperty;
 
@@ -62,33 +64,12 @@ public class AdminMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         /* 재료 리스트 관련 이벤트 */
 
         // 메뉴 이름,가격 텍스트필드 바인딩
         menuNameProperty.bindBidirectional(txtMenuField.textProperty());
         menuPriceProperty.bindBidirectional(editMenuPrice.textProperty());
         //        // Event Handling
-        baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
-            // 첫 번째 Null(추가 버튼) 뺀 subList
-
-            if(baseIngredientList.size() > 1) {
-                List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
-
-                existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
-                boolean isMenuExist = existingMenu != null;
-
-                if (!isMenuExist) {
-                    editMenuPrice.clear();
-                    txtMenuField.clear();
-                } else {
-                    menuNameProperty.setValue(existingMenu.getName());
-
-                    existingMenu.getCalcPrice();
-                    menuPriceProperty.setValue("" + existingMenu.getPrice());
-                }
-            }
-        });
 
         /* 메뉴 리스트 관련 초기화 */
         listingMenu(menuList, false);
@@ -108,13 +89,29 @@ public class AdminMenuController implements Initializable {
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(newValue) {
+                    try {
+                        Menu.setBasePrice(Integer.parseInt(editBasicPrice.getText()));
+                    } catch (NumberFormatException n) {}
+
                     editMenuPrice.setDisable(true);
-                    if(existingMenu != null)
-                        menuPriceProperty.setValue("" + existingMenu.getCalcPrice());
+                    if (existingMenu != null)
+                        menuPriceProperty.setValue(""+existingMenu.getCalcPrice());
                 }
                 else
                     editMenuPrice.setDisable(false);
             }
+        });
+
+        //Basic Price 입력창 리스너
+        editBasicPrice.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                if (checkBox.isSelected()) {
+                    Menu.setBasePrice(Integer.parseInt(editBasicPrice.getText()));
+                    if (existingMenu != null)
+                        menuPriceProperty.setValue("" + existingMenu.getCalcPrice());
+                }
+            }
+            catch (NumberFormatException e) {}
         });
 
         /* 기타 옵션들 관련 초기화 */
@@ -127,10 +124,10 @@ public class AdminMenuController implements Initializable {
         editMenuPrice.setDisable(true);
 
         editBasicPrice.setText(String.valueOf(Menu.getBasePrice()));
-
     }
 
     private void handleCan(ActionEvent event) {
+        Menu.setBasePrice(tempBasePrice);
         SceneChanger.getInstance().back();
     }
 
@@ -139,6 +136,7 @@ public class AdminMenuController implements Initializable {
         String basicPrice = editBasicPrice.getText();
         System.out.println(Integer.parseInt(basicPrice));
         Menu.setBasePrice(Integer.parseInt(basicPrice));
+
     }
     private void handleBasic(ActionEvent event) {
         listingMenu(menuList, false);
@@ -168,6 +166,24 @@ public class AdminMenuController implements Initializable {
                 baseIngredientList.add(0, new Ingredient());
                 menuNameProperty.setValue(menu.getName());
                 baseIngredientList.addAll(menu.getBaseIngredients());
+            }
+        });
+        baseIngredientList.addListener((ListChangeListener<Ingredient>) c -> {			// 재료 변경 이벤트
+            // 첫 번째 Null(추가 버튼) 뺀 subList
+
+            if(baseIngredientList.size() > 1) {
+                List<Ingredient> withoutNull = baseIngredientList.subList(1, baseIngredientList.size());
+
+                existingMenu = MenuBoard.getInstance().getMenu(withoutNull);
+                boolean isMenuExist = existingMenu != null;
+
+                if (!isMenuExist) {
+                    editMenuPrice.clear();
+                    txtMenuField.clear();
+                } else {
+                    menuNameProperty.setValue(existingMenu.getName());
+                    menuPriceProperty.setValue("" + existingMenu.getCalcPrice());
+                }
             }
         });
 
