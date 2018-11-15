@@ -1,5 +1,9 @@
 package cafe.model;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,7 @@ public class Inventory {
 		// TODO: 파일 입력으로 재료 목록 받아오기
 
 		/*Test Data*/
-		insertTestData();
+		readFromFile();
 	}
 
 	public static Inventory getInstance() {
@@ -76,5 +80,47 @@ public class Inventory {
 		addIngredient("데운우유", 1000, -1);
 
 		getIngredient("샷").setAmount(800);
+	}
+
+	public void readFromFile() {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader("data/ingredient.txt"));
+
+			while(true) {
+				String line = br.readLine();
+				if (line==null) break;
+				String[] tokens = line.split("\t");
+
+				addIngredient(tokens[0], Integer.parseInt(tokens[1]), -1, Boolean.parseBoolean(tokens[2]));
+			}
+
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 메뉴 정보를 파일로 저장
+	public void saveToFile() {
+		FileOutputStream output;
+		try {
+			// Name	Cost	isCoffee
+			output = new FileOutputStream("data/ingredient.txt");
+
+			for(Ingredient ingredient : ingredientList) {
+				if(ingredient.isDummy()) continue;
+
+				String str = ingredient.getName() + '\t' +				// 재료명
+						ingredient.getCost() + '\t' +					// 가격
+						(ingredient instanceof CoffeeBean) + "\r\n";	// 커피 여부
+
+				output.write(str.getBytes());
+			}
+
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -76,4 +76,6 @@ public class Ingredient {
 	public boolean isDummy() {
 		return this.name == null;
 	}
+
+
 }

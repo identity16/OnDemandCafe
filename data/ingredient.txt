@@ -1,0 +1,6 @@
+샷	500	true
+물	0	false
+휘핑크림	500	false
+초코시럽	700	false
+데운우유	1000	false
+인삼 시럽	1500	false
