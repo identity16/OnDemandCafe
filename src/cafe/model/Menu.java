@@ -15,7 +15,7 @@ public class Menu {
 	private List<Ingredient> extraIngredients;		// 추가 재료
 	private int price;								// 메뉴 가격
 	private boolean isCustom;						// 커스텀 메뉴 플래그
-	private boolean isCalcul;						// 가격 설정 플래그
+	private boolean isPriceFixed = false;						// 가격 설정 플래그
 	private static int sizePrice = 1500;
 
 	public Menu() {
@@ -29,16 +29,30 @@ public class Menu {
 		this(name, true);
 	}
 
+	public Menu(String name, int price) {
+		this(name, price, true);
+	}
+
 	public Menu(String name, boolean isCustom) {
 		this.name = new SimpleStringProperty(name);
 		this.baseIngredients = new ArrayList<>();
 		this.extraIngredients = new ArrayList<>();
 		this.price = Menu.basePrice;
 		this.isCustom = isCustom;
+		this.isPriceFixed = false;
+	}
+
+	public Menu(String name, int price, boolean isCustom) {
+		this(name, isCustom);
+
+		this.isPriceFixed = true;
+		this.price = price;
 	}
 
 	public Menu(Menu menu) {	// Deep Copy
-		this(menu.getName(), menu.isCustom);
+		this(menu.getName(), menu.getPrice(), menu.isCustom);
+
+		this.isPriceFixed = menu.isPriceFixed();
 
 		for(Ingredient ingredient : menu.getBaseIngredients()) {
 			this.addBaseIngredient(ingredient.getName());
@@ -150,10 +164,15 @@ public class Menu {
 	}
 
 	public int getPrice() {
-		return price;
+		if(isPriceFixed) {
+			return price;
+		} else {
+			return getCalcPrice();
+		}
 	}
 
 	public void setPrice(int price) {
+		this.isPriceFixed = true;
 		this.price = price;
 	}
 
@@ -179,6 +198,14 @@ public class Menu {
 		}
 
 		return price;
+	}
+
+	public boolean isPriceFixed() {
+		return isPriceFixed;
+	}
+
+	public void setPriceFixed(boolean priceFixed) {
+		isPriceFixed = priceFixed;
 	}
 
 	public static int getSizePrice()

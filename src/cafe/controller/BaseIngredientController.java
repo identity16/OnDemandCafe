@@ -126,11 +126,8 @@ public class BaseIngredientController implements Initializable {
 				}
 
 				MenuBoard.getInstance().addMenu(result);
-
-				result.setPrice(result.getCalcPrice());
 			} else {
 				result = new Menu(existingMenu);
-				result.setPrice(existingMenu.getPrice());
 			}
 
 			SceneChanger.getInstance().next(Location.EXTRA, result);

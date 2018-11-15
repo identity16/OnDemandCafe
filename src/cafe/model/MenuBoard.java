@@ -78,14 +78,17 @@ public class MenuBoard {
 
 	// 메뉴 추가
 	public void addMenu(Menu menu) {
-		addMenu(menu, menu.getCalcPrice());
+		if(getMenu(menu.getName()) == null) {
+			Menu newMenu = new Menu(menu);
+			menuList.add(newMenu);
+		}
 	}
 
 	public void addMenu(Menu menu, int price) {
 		if(getMenu(menu.getName()) == null) {
 			Menu newMenu = new Menu(menu);
-			menuList.add(newMenu);
 			newMenu.setPrice(price);
+			menuList.add(newMenu);
 		}
 	}
 

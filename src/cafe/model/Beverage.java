@@ -17,7 +17,6 @@ public class Beverage {
 	
 	public Beverage(Menu menu) {
 		Menu m = new Menu(menu);
-		m.setPrice(menu.getPrice());
 
 		this.name = m.getName();
 		this.isExtra = false;

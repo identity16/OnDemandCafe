@@ -26,6 +26,8 @@ public class AddBaseDialogController extends DialogController implements Initial
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		addBtn.setOnAction(event -> {
+
+
 			for (Node node : ingredientPane.getChildren())
 			{
 				BaseChoiceControl baseChoice = (BaseChoiceControl) node;
