@@ -70,6 +70,7 @@ public class AdminIngreController implements Initializable {
     				adminIngredientList.add(newIngredient);
     				Inventory.getInstance().addIngredient(addNameTextField.getText(),
     							Integer.parseInt(addCostTextField.getText()), -1);
+    				Inventory.getInstance().saveToFile();
     				addNameTextField.setText("");
         			addCostTextField.setText("");
     			}
@@ -96,6 +97,7 @@ public class AdminIngreController implements Initializable {
     					break;
     				}
     			}
+				Inventory.getInstance().saveToFile();
     			delNameTextField.setText("");
     			delCostTextField.setText("");
     		}
@@ -113,6 +115,7 @@ public class AdminIngreController implements Initializable {
     					break;
     				}
     			}
+				Inventory.getInstance().saveToFile();
     			delNameTextField.setText("");
     			delCostTextField.setText("");
     		}
