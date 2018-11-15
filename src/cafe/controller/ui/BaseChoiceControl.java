@@ -54,4 +54,5 @@ public class BaseChoiceControl extends VBox {
 	public Ingredient getIngredient() {
 		return ingredient;
 	}
+
 }

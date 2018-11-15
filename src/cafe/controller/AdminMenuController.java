@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 
 import javax.xml.bind.PrintConversionEvent;
 import java.io.IOException;
@@ -120,7 +121,6 @@ public class AdminMenuController implements Initializable {
                 isNameValid = nameMenu == null         // 다른 메뉴의 이름
                         || (!currentMenu.isDummy() && nameMenu.getName().equals(currentMenu.getName()));
             }
-
             btnSave.setDisable(!isIngredientValid || !isNameValid);
         });
 
@@ -177,25 +177,39 @@ public class AdminMenuController implements Initializable {
     }
     private void handleOpt(ActionEvent event) {
         List<Ingredient> temp = new ArrayList<Ingredient>();
+        temp.add(Inventory.getInstance().getIngredient("샷"));
 
-        ((AddBaseDialogController) SceneChanger.getInstance()
-                .newDialog(SceneChanger.Location.ADD_BASE)).initDialog(temp);
+        AddBaseDialogController control = ((AddBaseDialogController) SceneChanger.getInstance()
+                .newDialog(SceneChanger.Location.ADD_BASE));
 
-        AddBaseDialogController control = new AddBaseDialogController();
+        control.initDialog(temp);
 
+        BaseChoiceControl control2;
+        for(Node node : control.ingredientPane.getChildren()) {
+            for (Ingredient ingredient : currentMenu.getExtraIngredients()) {
+
+                control2 = (BaseChoiceControl) node;
+                if(ingredient.getName().equals(control2.nameLabel.getText())) {
+                    control2.choiceCircle.setFill(Color.rgb(243, 156, 18));
+                    control2.setClicked(true);
+                }
+            }
+        }
         control.addBtn.setOnAction(event2 -> {
+            BaseChoiceControl control3;
             for (Node node : control.ingredientPane.getChildren()) {
 
-                BaseChoiceControl control2 = (BaseChoiceControl) node;
-                if (!control2.isClicked()) {
-                    currentMenu.addExtraIngredient(control2.nameLabel.getText());
-                    System.out.println(control2.nameLabel.getText());
-                }
+                control3 = (BaseChoiceControl) node;
+                if (control3.isClicked())
+                    currentMenu.addExtraIngredient(control3.nameLabel.getText());
+                else
+                    currentMenu.removeExtraIngredient(control3.nameLabel.getText());
             }
             control.addBtn.getScene().getWindow().hide();
         });
     }
     private void handleCan(ActionEvent event) {
+
         SceneChanger.getInstance().back();
     }
 
@@ -213,6 +227,7 @@ public class AdminMenuController implements Initializable {
             // 메뉴 가격
             currentMenu.setPrice(Integer.parseInt(editMenuPrice.getText()));
             currentMenu.setPriceFixed(!checkBox.isSelected());
+
         } else {                                            // 새 메뉴 추가
             String name = menuNameProperty.getValue();
             boolean isPriceFixed = !checkBox.isSelected();
@@ -233,7 +248,8 @@ public class AdminMenuController implements Initializable {
         menu.getBaseIngredients().clear();
         for(Ingredient ingredient : baseIngredientList) {
             if(ingredient.isDummy()) continue;
-
+            if(ingredient.getName().equals("샷"))
+                currentMenu.addExtraIngredient("샷");
             menu.addBaseIngredient(ingredient.getName());
         }
 

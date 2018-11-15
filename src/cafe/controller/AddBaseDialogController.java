@@ -76,12 +76,14 @@ public class AddBaseDialogController extends DialogController implements Initial
 			baseChoice.nameLabel.setMouseTransparent(true);
 			baseChoice.costLabel.setMouseTransparent(true);
 
+			/*
 			baseChoice.choiceCircle.setOnMouseEntered(event -> baseChoice.choiceCircle.setFill(Color.rgb(243, 156, 18)));
 			baseChoice.choiceCircle.setOnMouseExited(event -> {
 				if(!baseChoice.isClicked()) {
 					baseChoice.choiceCircle.setFill(Color.rgb(221, 221, 221));
 				}
 			});
+			*/
 			baseChoice.choiceCircle.setOnMouseClicked(event -> {
 				if (!baseChoice.isClicked()) {
 					baseChoice.choiceCircle.setFill(Color.rgb(243, 156, 18));

@@ -3,6 +3,7 @@ package cafe.controller.ui;
 import cafe.SceneChanger;
 import cafe.controller.AddBaseDialogController;
 import cafe.model.Ingredient;
+import cafe.model.MenuBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -37,7 +38,6 @@ public class IngredientControl extends ListCell<Ingredient> {
 			throw new RuntimeException(e);
 		}
 	}
-
 	@Override
 	protected void updateItem(Ingredient item, boolean empty) {
 		super.updateItem(item, empty);
