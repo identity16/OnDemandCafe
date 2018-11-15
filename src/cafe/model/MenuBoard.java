@@ -1,5 +1,8 @@
 package cafe.model;
 
+import javafx.beans.property.IntegerProperty;
+
+import java.io.*;
 import java.util.*;
 
 public class MenuBoard {
@@ -12,10 +15,7 @@ public class MenuBoard {
 		menuList.add(new Menu());		// Insert Dummy Object
 
 		// File Input => Add Loaded Menu
-		// TODO: 파일 입력으로 메뉴 목록 받아오기
-
-		/* Test Data */
-		insertTestData();
+		readFromFile();
 	}
 
 	public static MenuBoard getInstance() {
@@ -85,11 +85,8 @@ public class MenuBoard {
 	}
 
 	public void addMenu(Menu menu, int price) {
-		if(getMenu(menu.getName()) == null) {
-			Menu newMenu = new Menu(menu);
-			newMenu.setPrice(price);
-			menuList.add(newMenu);
-		}
+		menu.setPrice(price);
+		addMenu(menu);
 	}
 
 	// 메뉴 삭제
@@ -107,6 +104,8 @@ public class MenuBoard {
 
 	// 테스트 함수
 	private void insertTestData() {
+		// Name, isCustom, Base/Extra, Price
+
 		Menu m1 = new Menu("에스프레소", false);
 		Menu m2 = new Menu("아메리카노", false);
 		Menu m3 = new Menu("비엔나", false);
@@ -163,9 +162,98 @@ public class MenuBoard {
 		addMenu(m5);
 		addMenu(m6);
 		addMenu(m7);
-//		addMenu(m8, 9000);
+		addMenu(m8, 9000);
 		addMenu(m9);
 		addMenu(m10);
 		addMenu(m11);
+	}
+
+	public void readFromFile() {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader("data/menu.txt"));
+			String firstLine = br.readLine();
+			String[] tokens = firstLine.split("\t");
+
+			Menu.setBasePrice(Integer.parseInt(tokens[0]));
+			Menu.setSizePrice(Integer.parseInt(tokens[1]));
+
+			while(true) {
+				String line = br.readLine();
+				if (line==null) break;
+				tokens = line.split("\t");
+
+				Menu menu  = new Menu(tokens[0], Boolean.valueOf(tokens[1]));
+
+				int idx = 3;
+				while(!"]".equals(tokens[idx])) {
+					menu.addBaseIngredient(tokens[idx]);
+					idx++;
+				}
+
+				idx++;
+
+				while(!"]".equals(tokens[idx])) {
+					menu.addExtraIngredient(tokens[idx]);
+					idx++;
+				}
+
+				idx++;
+
+				if(idx < tokens.length) {
+					addMenu(menu, Integer.parseInt(tokens[idx]));
+				} else {
+					addMenu(menu);
+				}
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 메뉴 정보를 파일로 저장
+	public void saveToFile() {
+		FileOutputStream output;
+		try {
+			// BasePrice	SizePrice
+			// Name	isCustom	[	Base1	...	]	[	Extra1	...	]	Price
+			output = new FileOutputStream("data/menu.txt");
+
+			output.write((Menu.getBasePrice() + "\t" + Menu.getSizePrice() + "\r\n").getBytes());
+
+			for(Menu menu : menuList) {
+				if(menu.isDummy()) continue;
+
+				StringBuilder builder = new StringBuilder();
+				builder.append(menu.getName()).append('\t')
+						.append(menu.isCustom()).append('\t')
+						.append('[').append('\t');
+
+				for(Ingredient ingredient : menu.getBaseIngredients()) {
+					builder.append(ingredient.getName()).append('\t');
+				}
+
+				builder.append(']').append('\t').append('[').append('\t');;
+
+				for(Ingredient ingredient : menu.getExtraIngredients()) {
+					builder.append(ingredient.getName()).append('\t');
+				}
+
+				builder.append(']');
+
+				if(menu.isPriceFixed()) {
+					builder.append('\t').append(menu.getPrice());
+				}
+
+				builder.append("\r\n");
+
+				output.write(builder.toString().getBytes());
+			}
+
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

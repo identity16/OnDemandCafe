@@ -94,8 +94,10 @@ public class AdminMenuController implements Initializable {
 
             btnSave.setDisable(!isIngredientValid || !isNameValid);
 
-            // 가격 갱신
-            editMenuPrice.setText(String.valueOf(calcCurrentPrice()));
+            if(checkBox.isSelected()) {
+                // 가격 갱신
+                editMenuPrice.setText(String.valueOf(calcCurrentPrice()));
+            }
         });
 
         menuNameProperty.addListener((observable, oldValue, newValue) -> {
@@ -147,7 +149,7 @@ public class AdminMenuController implements Initializable {
         Menu.setBasePrice(basicPrice);
 
         Menu menu;
-        if(!currentMenu.isDummy()) {
+        if(!currentMenu.isDummy()) {                        // 기존 데이터 수정
             menu = currentMenu;
             // 메뉴 이름
             currentMenu.setName(txtMenuField.getText());
@@ -155,7 +157,7 @@ public class AdminMenuController implements Initializable {
             // 메뉴 가격
             currentMenu.setPrice(Integer.parseInt(editMenuPrice.getText()));
             currentMenu.setPriceFixed(!checkBox.isSelected());
-        } else {
+        } else {                                            // 새 메뉴 추가
             String name = menuNameProperty.getValue();
             boolean isPriceFixed = !checkBox.isSelected();
             int price = Integer.parseInt(editMenuPrice.getText());
@@ -167,7 +169,6 @@ public class AdminMenuController implements Initializable {
             } else {
                 menu = new Menu(name, isCustom);
             }
-
             MenuBoard.getInstance().addMenu(menu);
             menu = MenuBoard.getInstance().getMenu(menu.getName());
             currentMenu = menu;
@@ -181,16 +182,19 @@ public class AdminMenuController implements Initializable {
         }
 
         listingMenu(menuList, radioCustom.isSelected());
+        MenuBoard.getInstance().saveToFile();
     }
 
     private void handleDel(ActionEvent event) {
         if(!currentMenu.isDummy()) {
-            menuList.remove(currentMenu);
+            MenuBoard.getInstance().removeMenu(currentMenu.getName());
 
             this.currentMenu = menuList.get(0);     // current = dummy
             listingMenu(menuList, radioCustom.isSelected());
             listingIngre(currentMenu);
         }
+
+        MenuBoard.getInstance().saveToFile();
     }
 
     private void handleBasic(ActionEvent event) {
@@ -226,8 +230,8 @@ public class AdminMenuController implements Initializable {
             if(!menu.isDummy()) {
                 menuNameProperty.setValue(menu.getName());
                 menuPriceProperty.setValue(String.valueOf(menu.getPrice()));
-                baseIngredientList.addAll(menu.getBaseIngredients());
                 checkBox.setSelected(!menu.isPriceFixed());
+                baseIngredientList.addAll(menu.getBaseIngredients());
             } else {
                 menuNameProperty.setValue("");
                 menuPriceProperty.setValue(String.valueOf(0));

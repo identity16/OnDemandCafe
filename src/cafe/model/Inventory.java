@@ -69,11 +69,11 @@ public class Inventory {
 	}
 
 	private void insertTestData() {
-		addIngredient("샷", 500, 500, true);
-		addIngredient("물", 0, 1000);
-		addIngredient("휘핑크림", 500, 100);
-		addIngredient("초코시럽", 700, 100);
-		addIngredient("데운우유", 1000, 200);
+		addIngredient("샷", 500, -1, true);
+		addIngredient("물", 0, -1);
+		addIngredient("휘핑크림", 500, -1);
+		addIngredient("초코시럽", 700, -1);
+		addIngredient("데운우유", 1000, -1);
 
 		getIngredient("샷").setAmount(800);
 	}

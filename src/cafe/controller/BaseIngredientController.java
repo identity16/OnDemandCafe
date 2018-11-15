@@ -114,6 +114,7 @@ public class BaseIngredientController implements Initializable {
 			Menu result;
 			Menu existingMenu = MenuBoard.getInstance().getMenu(name);
 
+			menuNameField.setDisable(true);
 
 			if(existingMenu == null) {	// 새로운 메뉴이면
 				result = new Menu(name);
@@ -130,6 +131,7 @@ public class BaseIngredientController implements Initializable {
 				result = new Menu(existingMenu);
 			}
 
+			MenuBoard.getInstance().saveToFile();
 			SceneChanger.getInstance().next(Location.EXTRA, result);
 		});
 

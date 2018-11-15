@@ -151,6 +151,16 @@ public class Menu {
 		Menu.basePrice = basePrice;
 	}
 
+	public static int getSizePrice()
+	{
+		return sizePrice;
+	}
+
+	public static void setSizePrice(int sizePrice)
+	{
+		Menu.sizePrice = sizePrice;
+	}
+
 	public String getName() {
 		return name.get();
 	}
@@ -206,11 +216,6 @@ public class Menu {
 
 	public void setPriceFixed(boolean priceFixed) {
 		isPriceFixed = priceFixed;
-	}
-
-	public static int getSizePrice()
-	{
-		return sizePrice;
 	}
 
 	public boolean isCustom() {
