@@ -21,6 +21,7 @@ import javafx.scene.layout.TilePane;
 
 import javax.xml.bind.PrintConversionEvent;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle ;
 
@@ -46,6 +47,8 @@ public class AdminMenuController implements Initializable {
 
     private boolean isIngredientValid;
     private boolean isNameValid;
+
+    private int basePrice = Menu.getBasePrice();
 
     private StringProperty menuNameProperty, menuPriceProperty;
 
@@ -124,6 +127,32 @@ public class AdminMenuController implements Initializable {
             } else {
                 editMenuPrice.setDisable(false);
             }
+        });
+
+        //Basic Price 입력창 리스너
+        editBasicPrice.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+				int inputBasePrice = Integer.parseInt(editBasicPrice.getText());
+
+				if(inputBasePrice >= 0) {
+					basePrice = inputBasePrice;
+				} else {
+					editBasicPrice.setText(oldValue);
+				}
+
+				Menu.setBasePrice(basePrice);
+
+				// 현재 표시된 가격 변경
+                if (checkBox.isSelected()) {
+                    if (!currentMenu.isDummy() && !currentMenu.isPriceFixed()) {
+						menuPriceProperty.setValue("" + calcCurrentPrice());
+					}
+                }
+
+				MenuBoard.getInstance().saveToFile();
+            } catch (NumberFormatException e) {
+            	e.printStackTrace();
+			}
         });
 
         /* 기타 옵션들 관련 초기화 */
