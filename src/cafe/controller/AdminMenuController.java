@@ -144,7 +144,7 @@ public class AdminMenuController implements Initializable {
 
 				// 현재 표시된 가격 변경
                 if (checkBox.isSelected()) {
-                    if (!currentMenu.isDummy() && !currentMenu.isPriceFixed()) {
+                    if (currentMenu != null && !currentMenu.isDummy() && !currentMenu.isPriceFixed()) {
 						menuPriceProperty.setValue("" + calcCurrentPrice());
 					}
                 }
