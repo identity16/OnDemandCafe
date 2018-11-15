@@ -15,6 +15,7 @@ public class Menu {
 	private List<Ingredient> extraIngredients;		// 추가 재료
 	private int price;								// 메뉴 가격
 	private boolean isCustom;						// 커스텀 메뉴 플래그
+	private boolean isCalcul;						// 가격 설정 플래그
 	private static int sizePrice = 1500;
 
 	public Menu() {

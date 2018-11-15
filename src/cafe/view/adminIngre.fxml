@@ -11,15 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.5" xmlns:fx="http://javafx.com/fxml" fx:controller="cafe.controller.AdminIngreController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafe.controller.AdminIngreController">
    <children>
-      <Label layoutX="19.0" layoutY="19.0" text="Ingredient Config">
+      <Label layoutX="82.0" layoutY="22.0" text="Ingredient Config">
          <font>
             <Font name="SansSerif Regular" size="42.0" />
          </font>
       </Label>
-      <TilePane layoutX="22.0" layoutY="93.0" prefHeight="473.0" prefWidth="760.0" />
-      <VBox layoutX="810.0" layoutY="46.0" prefHeight="254.0" prefWidth="368.0">
+      <TilePane layoutX="77.0" layoutY="93.0" prefHeight="474.0" prefWidth="594.0" />
+      <VBox layoutX="690.0" layoutY="44.0" prefHeight="256.0" prefWidth="488.0">
          <children>
             <Label text="Add">
                <font>
@@ -40,7 +40,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="41.0" prefWidth="257.0">
+                  <TextField prefHeight="36.0" prefWidth="364.0">
                      <font>
                         <Font name="SansSerif Regular" size="26.0" />
                      </font>
@@ -60,7 +60,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="51.0" prefWidth="257.0" HBox.hgrow="NEVER">
+                  <TextField prefHeight="18.0" prefWidth="310.0" HBox.hgrow="NEVER">
                      <font>
                         <Font name="SansSerif Regular" size="26.0" />
                      </font>
@@ -68,16 +68,24 @@
                         <Insets left="18.0" top="15.0" />
                      </HBox.margin>
                   </TextField>
+                  <Label text="원">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id = "btnAdd" mnemonicParsing="false" prefHeight="47.0" prefWidth="82.0" text="+Add">
+                  <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="47.0" prefWidth="82.0" text="+Add">
                      <font>
                         <Font name="SansSerif Regular" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id = "btnRes" mnemonicParsing="false" prefHeight="47.0" prefWidth="81.0" text="Reset">
+                  <Button fx:id="btnRes" mnemonicParsing="false" prefHeight="47.0" prefWidth="81.0" text="Reset">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -89,7 +97,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="810.0" layoutY="315.0" prefHeight="262.0" prefWidth="368.0">
+      <VBox layoutX="690.0" layoutY="321.0" prefHeight="256.0" prefWidth="488.0">
          <children>
             <Label text="Edit / Delete">
                <font>
@@ -110,7 +118,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="41.0" prefWidth="257.0">
+                  <TextField prefHeight="34.0" prefWidth="360.0">
                      <font>
                         <Font name="SansSerif Regular" size="26.0" />
                      </font>
@@ -130,7 +138,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="51.0" prefWidth="257.0" HBox.hgrow="NEVER">
+                  <TextField prefHeight="46.0" prefWidth="307.0" HBox.hgrow="NEVER">
                      <font>
                         <Font name="SansSerif Regular" size="26.0" />
                      </font>
@@ -138,16 +146,24 @@
                         <Insets left="18.0" top="15.0" />
                      </HBox.margin>
                   </TextField>
+                  <Label text="원">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="20.0" />
+                     </padding>
+                  </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id = "btnEdit" mnemonicParsing="false" prefHeight="47.0" prefWidth="82.0" text="Edit">
+                  <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="47.0" prefWidth="82.0" text="Edit">
                      <font>
                         <Font name="SansSerif Regular" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id = "btnDel" mnemonicParsing="false" prefHeight="47.0" prefWidth="81.0" text="Delete">
+                  <Button fx:id="btnDel" mnemonicParsing="false" prefHeight="47.0" prefWidth="81.0" text="Delete">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
@@ -155,7 +171,7 @@
                         <Font name="SansSerif Regular" size="19.0" />
                      </font>
                   </Button>
-                  <Button fx:id = "btnCan" mnemonicParsing="false" prefHeight="46.0" prefWidth="112.0" text="Cancel">
+                  <Button fx:id="btnCan" mnemonicParsing="false" prefHeight="46.0" prefWidth="112.0" text="Cancel">
                      <font>
                         <Font name="SansSerif Regular" size="20.0" />
                      </font>

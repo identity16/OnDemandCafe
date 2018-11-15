@@ -1,8 +1,11 @@
 package cafe.controller.ui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,9 +16,12 @@ import cafe.model.Menu;
 import java.io.IOException;
 
 public class MenuControl extends StackPane {
-	@FXML private Label name;
-	@FXML private StackPane customLabel;
-	@FXML private Rectangle rectangle;
+	@FXML
+	private Label name;
+	@FXML
+	private StackPane customLabel;
+	@FXML
+	public Rectangle rectangle;
 
 	private Menu menu;
 
@@ -37,6 +43,7 @@ public class MenuControl extends StackPane {
 			// 특정 컨트롤 Mouse Event 무효화
 			customLabel.setMouseTransparent(true);
 			name.setMouseTransparent(true);
+
 
 			// Mouse Event Handling
 
@@ -60,3 +67,4 @@ public class MenuControl extends StackPane {
 		}
 	}
 }
+
