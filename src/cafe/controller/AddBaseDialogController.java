@@ -55,7 +55,7 @@ public class AddBaseDialogController extends DialogController implements Initial
 		List<Ingredient> dialogIngredients = new ArrayList<>(Inventory.getInstance().getIngredientList());
 
 		for (Ingredient ingredient : baseIngredients) {
-			if(ingredient.isDummy()) continue;
+			if(ingredient == null || ingredient.isDummy()) continue;
 
 			Ingredient invIngredient = Inventory.getInstance().getIngredient(ingredient.getName());
 
