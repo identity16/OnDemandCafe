@@ -1,9 +1,11 @@
 package cafe.controller;
 
 import cafe.SceneChanger;
+import cafe.controller.ui.BaseChoiceControl;
 import cafe.controller.ui.IngredientControlFactory;
 import cafe.controller.ui.MenuControl;
 import cafe.model.Ingredient;
+import cafe.model.Inventory;
 import cafe.model.Menu;
 import cafe.model.MenuBoard;
 import javafx.application.Platform;
@@ -15,13 +17,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 
-import javax.xml.bind.PrintConversionEvent;
 import java.net.URL;
-import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle ;
 
@@ -42,7 +45,7 @@ public class AdminMenuController implements Initializable {
     @FXML private CheckBox checkBox;
 
     private List<Menu> menuList = MenuBoard.getInstance().getMenuList();
-    private ObservableList<Ingredient> baseIngredientList;
+    private ObservableList<Ingredient> baseIngredientList, extraIngredientList;
     private Menu currentMenu;          //현재 접근하고 있는 메뉴
 
     private boolean isIngredientValid;
@@ -54,6 +57,7 @@ public class AdminMenuController implements Initializable {
 
     public AdminMenuController() {
         baseIngredientList = FXCollections.observableArrayList();
+        extraIngredientList = FXCollections.observableArrayList();
 
         menuNameProperty = new SimpleStringProperty(null);
         menuPriceProperty = new SimpleStringProperty(null);
@@ -75,6 +79,7 @@ public class AdminMenuController implements Initializable {
         btnCan.setOnAction(this::handleCan);
         btnSave.setOnAction(this::handleSave);
         btnDel.setOnAction(this::handleDel);
+        btnOpt.setOnAction(this::handleOpt);
         radioBasic.setOnAction(this::handleBasic);
         radioCustom.setOnAction(this::handleCustom);
 
@@ -112,7 +117,6 @@ public class AdminMenuController implements Initializable {
                 isNameValid = nameMenu == null         // 다른 메뉴의 이름
                         || (!currentMenu.isDummy() && nameMenu.getName().equals(currentMenu.getName()));
             }
-
             btnSave.setDisable(!isIngredientValid || !isNameValid);
         });
 
@@ -161,14 +165,58 @@ public class AdminMenuController implements Initializable {
         radioCustom.setToggleGroup(group);
         radioBasic.setSelected(true);
 
+        btnOpt.setDisable(true);
         checkBox.setSelected(true);
         editMenuPrice.setDisable(true);
-
         editBasicPrice.setText(String.valueOf(Menu.getBasePrice()));
 
     }
+    private void handleOpt(ActionEvent event) {
+        extraIngredientList = FXCollections.observableArrayList();
+
+        if(currentMenu != null && !currentMenu.isDummy()) {
+            for(Ingredient ingredient : currentMenu.getExtraIngredients()) {
+                extraIngredientList.add(Inventory.getInstance().getIngredient(ingredient.getName()));
+            }
+        }
+
+        AddBaseDialogController control = ((AddBaseDialogController) SceneChanger.getInstance()
+                .newDialog(SceneChanger.Location.ADD_BASE));
+
+        List<Ingredient> dialogIngredients = new ArrayList<>();
+        dialogIngredients.add(Inventory.getInstance().getIngredient("샷"));
+
+        control.initDialog(dialogIngredients);
+
+        BaseChoiceControl control2;
+        for(Node node : control.ingredientPane.getChildren()) {
+            for (Ingredient ingredient : extraIngredientList) {
+                control2 = (BaseChoiceControl) node;
+                if(ingredient.getName().equals(control2.nameLabel.getText())) {
+                    control2.choiceCircle.setFill(Color.rgb(243, 156, 18));
+                    control2.setClicked(true);
+                }
+            }
+        }
+
+        control.addBtn.setOnAction(event2 -> {
+            BaseChoiceControl control3;
+
+            for (Node node : control.ingredientPane.getChildren()) {
+
+                control3 = (BaseChoiceControl) node;
+                if (control3.isClicked())
+                    extraIngredientList.add(Inventory.getInstance().getIngredient(control3.nameLabel.getText()));
+                else
+                    extraIngredientList.remove(Inventory.getInstance().getIngredient(control3.nameLabel.getText()));
+            }
+
+            control.addBtn.getScene().getWindow().hide();
+        });
+    }
 
     private void handleCan(ActionEvent event) {
+
         SceneChanger.getInstance().back();
     }
 
@@ -186,6 +234,7 @@ public class AdminMenuController implements Initializable {
             // 메뉴 가격
             currentMenu.setPrice(Integer.parseInt(editMenuPrice.getText()));
             currentMenu.setPriceFixed(!checkBox.isSelected());
+
         } else {                                            // 새 메뉴 추가
             String name = menuNameProperty.getValue();
             boolean isPriceFixed = !checkBox.isSelected();
@@ -204,10 +253,20 @@ public class AdminMenuController implements Initializable {
         }
 
         menu.getBaseIngredients().clear();
+        menu.getExtraIngredients().clear();
+
         for(Ingredient ingredient : baseIngredientList) {
             if(ingredient.isDummy()) continue;
-
+            if(ingredient.getName().equals("샷"))
+                currentMenu.addExtraIngredient("샷");
             menu.addBaseIngredient(ingredient.getName());
+        }
+
+        for(Ingredient ingredient : extraIngredientList) {
+            if(ingredient.isDummy()) continue;
+            if(ingredient.getName().equals("샷")) continue;
+
+            menu.addExtraIngredient(ingredient.getName());
         }
 
         listingMenu(menuList, radioCustom.isSelected());
@@ -249,6 +308,7 @@ public class AdminMenuController implements Initializable {
     private void listingIngre(Menu menu) {
         this.currentMenu = menu;
 
+        btnOpt.setDisable(false);
         btnDel.setDisable(menu.isDummy());
 
         // 값 초기화
