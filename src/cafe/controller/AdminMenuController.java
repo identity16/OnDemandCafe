@@ -16,7 +16,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,10 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 
-import javax.xml.bind.PrintConversionEvent;
-import java.io.IOException;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle ;
@@ -49,7 +45,7 @@ public class AdminMenuController implements Initializable {
     @FXML private CheckBox checkBox;
 
     private List<Menu> menuList = MenuBoard.getInstance().getMenuList();
-    private ObservableList<Ingredient> baseIngredientList;
+    private ObservableList<Ingredient> baseIngredientList, extraIngredientList;
     private Menu currentMenu;          //현재 접근하고 있는 메뉴
 
     private boolean isIngredientValid;
@@ -61,6 +57,7 @@ public class AdminMenuController implements Initializable {
 
     public AdminMenuController() {
         baseIngredientList = FXCollections.observableArrayList();
+        extraIngredientList = FXCollections.observableArrayList();
 
         menuNameProperty = new SimpleStringProperty(null);
         menuPriceProperty = new SimpleStringProperty(null);
@@ -69,7 +66,6 @@ public class AdminMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         /* 재료 리스트 관련 이벤트 */
 
         // 메뉴 이름,가격 텍스트필드 바인딩
@@ -176,18 +172,25 @@ public class AdminMenuController implements Initializable {
 
     }
     private void handleOpt(ActionEvent event) {
-        List<Ingredient> temp = new ArrayList<Ingredient>();
-        temp.add(Inventory.getInstance().getIngredient("샷"));
+        extraIngredientList = FXCollections.observableArrayList();
+
+        if(currentMenu != null && !currentMenu.isDummy()) {
+            for(Ingredient ingredient : currentMenu.getExtraIngredients()) {
+                extraIngredientList.add(Inventory.getInstance().getIngredient(ingredient.getName()));
+            }
+        }
 
         AddBaseDialogController control = ((AddBaseDialogController) SceneChanger.getInstance()
                 .newDialog(SceneChanger.Location.ADD_BASE));
 
-        control.initDialog(temp);
+        List<Ingredient> dialogIngredients = new ArrayList<>();
+        dialogIngredients.add(Inventory.getInstance().getIngredient("샷"));
+
+        control.initDialog(dialogIngredients);
 
         BaseChoiceControl control2;
         for(Node node : control.ingredientPane.getChildren()) {
-            for (Ingredient ingredient : currentMenu.getExtraIngredients()) {
-
+            for (Ingredient ingredient : extraIngredientList) {
                 control2 = (BaseChoiceControl) node;
                 if(ingredient.getName().equals(control2.nameLabel.getText())) {
                     control2.choiceCircle.setFill(Color.rgb(243, 156, 18));
@@ -195,19 +198,23 @@ public class AdminMenuController implements Initializable {
                 }
             }
         }
+
         control.addBtn.setOnAction(event2 -> {
             BaseChoiceControl control3;
+
             for (Node node : control.ingredientPane.getChildren()) {
 
                 control3 = (BaseChoiceControl) node;
                 if (control3.isClicked())
-                    currentMenu.addExtraIngredient(control3.nameLabel.getText());
+                    extraIngredientList.add(Inventory.getInstance().getIngredient(control3.nameLabel.getText()));
                 else
-                    currentMenu.removeExtraIngredient(control3.nameLabel.getText());
+                    extraIngredientList.remove(Inventory.getInstance().getIngredient(control3.nameLabel.getText()));
             }
+
             control.addBtn.getScene().getWindow().hide();
         });
     }
+
     private void handleCan(ActionEvent event) {
 
         SceneChanger.getInstance().back();
@@ -246,11 +253,20 @@ public class AdminMenuController implements Initializable {
         }
 
         menu.getBaseIngredients().clear();
+        menu.getExtraIngredients().clear();
+
         for(Ingredient ingredient : baseIngredientList) {
             if(ingredient.isDummy()) continue;
             if(ingredient.getName().equals("샷"))
                 currentMenu.addExtraIngredient("샷");
             menu.addBaseIngredient(ingredient.getName());
+        }
+
+        for(Ingredient ingredient : extraIngredientList) {
+            if(ingredient.isDummy()) continue;
+            if(ingredient.getName().equals("샷")) continue;
+
+            menu.addExtraIngredient(ingredient.getName());
         }
 
         listingMenu(menuList, radioCustom.isSelected());
