@@ -22,6 +22,6 @@
         ![Admin_ingredient.png](Admin_ingredient.png)
 
 ## 개발자
-- 신원준([깃허브](https://github.com/identity16))
-- 정용준([깃허브](https://github.com/dkile))
-- 조원희([깃허브](https://github.com/cjdthsus2gh))
+- 신원준([github](https://github.com/identity16))
+- 정용준([github](https://github.com/dkile))
+- 조원희([github](https://github.com/cjdthsus2gh))
